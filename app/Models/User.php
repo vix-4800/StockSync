@@ -31,6 +31,7 @@ class User extends Authenticatable implements FilamentUser
         'custom_fields',
         'avatar_url',
         'team_id',
+        'is_blocked',
     ];
 
     /**
@@ -48,20 +49,19 @@ class User extends Authenticatable implements FilamentUser
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'custom_fields' => 'array',
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'is_blocked' => 'boolean',
+    ];
 
     /**
      * Check if the user can access the filament panel.
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasRole(UserRole::ADMIN) || isset($this->team);
+        return ($this->hasRole(UserRole::ADMIN) || isset($this->team)) && ! $this->isBlocked();
     }
 
     /**
@@ -70,5 +70,22 @@ class User extends Authenticatable implements FilamentUser
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
+    }
+
+    /**
+     * Check if the user is blocked.
+     */
+    public function isBlocked(): bool
+    {
+        return $this->is_blocked;
+    }
+
+    /**
+     * Change the user's blocked status.
+     */
+    public function changeBlockedStatus(): void
+    {
+        $this->is_blocked = ! $this->is_blocked;
+        $this->save();
     }
 }

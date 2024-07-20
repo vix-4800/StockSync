@@ -106,7 +106,7 @@ namespace App\Models{
  * @property mixed $password
  * @property string|null $theme
  * @property string|null $theme_color
- * @property string|null $custom_fields
+ * @property array|null $custom_fields
  * @property string|null $avatar_url
  * @property int|null $team_id
  * @property string|null $remember_token

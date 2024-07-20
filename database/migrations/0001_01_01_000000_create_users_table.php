@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('theme_color')->nullable();
             $table->json('custom_fields')->nullable();
             $table->string('avatar_url')->nullable();
+            $table->boolean('is_blocked')->default(false);
             $table->foreignIdFor(Team::class)->nullable()->cascadeOnDelete();
             $table->rememberToken();
             $table->timestamps();
