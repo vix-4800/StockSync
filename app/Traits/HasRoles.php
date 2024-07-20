@@ -20,13 +20,11 @@ trait HasRoles
 
     /**
      * Assign the given role to the user.
-     *
-     * @return void
      */
-    public function assignRole(UserRole $role)
+    public function assignRole(UserRole $role): void
     {
-        $role = Role::where('name', $role->value)->firstOrFail();
-        $this->roles()->attach($role->value);
+        $roleModel = Role::where('name', $role->value)->firstOrFail();
+        $this->roles()->attach($roleModel->id);
     }
 
     /**
@@ -50,7 +48,7 @@ trait HasRoles
      */
     public function removeRole(UserRole $role): void
     {
-        $role = Role::where('name', $role->value)->firstOrFail();
-        $this->roles()->detach($role->value);
+        $roleModel = Role::where('name', $role->value)->firstOrFail();
+        $this->roles()->detach($roleModel->id);
     }
 }
