@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
         $seeders = [
             RoleSeeder::class,
             AdminSeeder::class,
-            TeamSeeder::class,
             UserSeeder::class,
         ];
 

@@ -19,7 +19,6 @@ class AdminSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@localhost',
             'password' => bcrypt('admin'),
-            'team_id' => 1,
         ]);
         $user->assignRole(UserRole::ADMIN);
     }
