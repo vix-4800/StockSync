@@ -5,10 +5,12 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
+use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Hasnayeen\Themes\Http\Middleware\SetTheme;
+use Hasnayeen\Themes\ThemesPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -16,6 +18,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
 class AccountPanelProvider extends PanelProvider
 {
@@ -25,6 +28,9 @@ class AccountPanelProvider extends PanelProvider
             ->default()
             ->id('account')
             ->path('account')
+            ->registration()
+            ->passwordReset()
+            ->emailVerification()
             ->login()
             ->colors([
                 'primary' => Color::Amber,
@@ -32,7 +38,7 @@ class AccountPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([])
@@ -46,13 +52,18 @@ class AccountPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                \Hasnayeen\Themes\Http\Middleware\SetTheme::class,
+                SetTheme::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
             ])
             ->plugins([
-                \Hasnayeen\Themes\ThemesPlugin::make(),
+                ThemesPlugin::make(),
+                FilamentEditProfilePlugin::make()
+                    ->setNavigationGroup(__('Personal'))
+                    ->setTitle(__('Edit Profile'))
+                    ->setNavigationLabel(__('Edit Profile'))
+                    ->setIcon('heroicon-o-user'),
             ]);
     }
 }
