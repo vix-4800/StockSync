@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\HasRoles;
@@ -23,6 +25,10 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'theme',
+        'theme_color',
+        'custom_fields',
+        'avatar_url',
     ];
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Enums\Marketplace;
@@ -17,7 +19,7 @@ class MarketplaceAccount extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
+        'team_id',
         'name',
         'marketplace',
         'api_token',
@@ -36,10 +38,10 @@ class MarketplaceAccount extends Model
     ];
 
     /**
-     * Get the user that owns the MarketplaceAccount
+     * Get the team that owns the MarketplaceAccount
      */
-    public function user(): BelongsTo
+    public function team(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Team::class);
     }
 }
