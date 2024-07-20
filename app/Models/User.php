@@ -32,6 +32,7 @@ class User extends Authenticatable implements FilamentUser
         'avatar_url',
         'team_id',
         'is_blocked',
+        'phone',
     ];
 
     /**

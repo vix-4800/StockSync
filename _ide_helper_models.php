@@ -108,6 +108,7 @@ namespace App\Models{
  * @property string|null $theme_color
  * @property array|null $custom_fields
  * @property string|null $avatar_url
+ * @property bool $is_blocked
  * @property int|null $team_id
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -127,6 +128,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsBlocked($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
