@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->string('theme_color')->nullable();
             $table->json('custom_fields')->nullable();
             $table->string('avatar_url')->nullable();
+            $table->foreignIdFor(Team::class)->nullable()->cascadeOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });

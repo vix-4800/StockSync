@@ -1,7 +1,7 @@
 <?php
 
 use App\Enums\Marketplace;
-use App\Models\User;
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,12 +16,14 @@ return new class extends Migration
         Schema::create('marketplace_accounts', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor(User::class)->cascadeOnDelete();
+            $table->foreignIdFor(Team::class)->cascadeOnDelete();
             $table->string('name');
             $table->enum('marketplace', Marketplace::values());
             $table->string('api_token');
             $table->string('api_user_id')->nullable();
             $table->timestamp('api_token_expires_at')->nullable();
+
+            $table->unique(['team_id', 'name', 'marketplace']);
 
             $table->timestamps();
         });

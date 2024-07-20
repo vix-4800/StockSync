@@ -29,6 +29,7 @@ class User extends Authenticatable implements FilamentUser
         'theme_color',
         'custom_fields',
         'avatar_url',
+        'team_id',
     ];
 
     /**
@@ -62,23 +63,11 @@ class User extends Authenticatable implements FilamentUser
         return true;
     }
 
-    public function marketplaceAccounts(): HasMany
+    /**
+     * Get the team that owns the user.
+     */
+    public function team(): BelongsTo
     {
-        return $this->hasMany(MarketplaceAccount::class);
-    }
-
-    public function marketplaceOzonAccounts(): HasMany
-    {
-        return $this->hasMany(MarketplaceAccount::class)->where('marketplace', Marketplace::OZON);
-    }
-
-    public function marketplaceYandexAccounts(): HasMany
-    {
-        return $this->hasMany(MarketplaceAccount::class)->where('marketplace', Marketplace::YANDEXMARKET);
-    }
-
-    public function marketplaceWildberriesAccounts(): HasMany
-    {
-        return $this->hasMany(MarketplaceAccount::class)->where('marketplace', Marketplace::WILDBERRIES);
+        return $this->belongsTo(Team::class);
     }
 }
