@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\IsBlockedMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'welcome')->name('home');
+Route::redirect('/', '/account', 301)->middleware(IsBlockedMiddleware::class);
