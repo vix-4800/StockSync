@@ -16,11 +16,13 @@ return new class extends Migration
         Schema::create('employee_invitations', function (Blueprint $table) {
             $table->id();
             $table->string('email')->index();
-            $table->string('token', 32)->unique();
-            $table->timestamp('expires_at')->nullable();
-            $table->enum('status', InvitationStatus::values())->default(InvitationStatus::PENDING);
             $table->foreignIdFor(Team::class)->cascadeOnDelete();
+            $table->string('token', 32)->unique();
+            $table->enum('status', InvitationStatus::values())->default(InvitationStatus::PENDING);
+            $table->timestamp('expires_at')->nullable();
             $table->timestamps();
+
+            $table->unique(['email', 'team_id', 'status']);
         });
     }
 
