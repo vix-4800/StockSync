@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
+use App\Filament\Admin\Pages\Backups;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Middleware\IsBlockedMiddleware;
 use Filament\Http\Middleware\Authenticate;
@@ -23,6 +24,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -65,6 +67,8 @@ class AdminPanelProvider extends PanelProvider
                     ->setTitle(__('Edit Profile'))
                     ->setNavigationLabel(__('Edit Profile'))
                     ->setIcon('heroicon-o-user'),
+                FilamentSpatieLaravelBackupPlugin::make()
+                    ->usingPage(Backups::class),
             ])
             ->unsavedChangesAlerts()
             ->databaseNotifications();

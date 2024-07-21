@@ -19524,6 +19524,42 @@ namespace Livewire {
             }
     }
 
+namespace Spatie\SignalAwareCommand\Facades {
+            /**
+     * 
+     *
+     * @see \Spatie\SignalAwareCommand\Signal
+     */        class Signal {
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function handle($signal, $callable)
+        {
+                        /** @var \Spatie\SignalAwareCommand\Signal $instance */
+                        return $instance->handle($signal, $callable);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function executeSignalHandlers($signal, $command)
+        {
+                        /** @var \Spatie\SignalAwareCommand\Signal $instance */
+                        return $instance->executeSignalHandlers($signal, $command);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */        public static function clearHandlers($signal = null)
+        {
+                        /** @var \Spatie\SignalAwareCommand\Signal $instance */
+                        return $instance->clearHandlers($signal);
+        }
+            }
+    }
+
 namespace Illuminate\Support {
             /**
      * 
@@ -23131,6 +23167,42 @@ namespace NunoMaduro\Collision\Adapters\Laravel\Commands {
      * @internal 
      * @final 
      */        class TestCommand {
+            }
+    }
+
+namespace Spatie\Backup\Commands {
+            /**
+     * 
+     *
+     */        class BackupCommand {
+            }
+            /**
+     * 
+     *
+     */        class BaseCommand {
+            }
+            /**
+     * 
+     *
+     */        class CleanupCommand {
+            }
+            /**
+     * 
+     *
+     */        class ListCommand {
+            }
+            /**
+     * 
+     *
+     */        class MonitorCommand {
+            }
+    }
+
+namespace Spatie\SignalAwareCommand {
+            /**
+     * 
+     *
+     */        class SignalAwareCommand {
             }
     }
 
@@ -27493,6 +27565,7 @@ namespace  {
             class Agent extends \Jenssegers\Agent\Facades\Agent {}
             class FilamentEditProfile extends \Joaopaulolndev\FilamentEditProfile\Facades\FilamentEditProfile {}
             class Livewire extends \Livewire\Livewire {}
+            class Signal extends \Spatie\SignalAwareCommand\Facades\Signal {}
     }
 
 
