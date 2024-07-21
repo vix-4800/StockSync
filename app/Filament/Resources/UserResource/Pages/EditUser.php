@@ -16,6 +16,15 @@ class EditUser extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
+            Actions\ForceDeleteAction::make(),
+            Actions\RestoreAction::make(),
+            Actions\Action::make('verify')
+                ->action(function () {
+                    $this->record->markEmailAsVerified();
+                })
+                ->color('success')
+                ->visible(! $this->record->hasVerifiedEmail())
+                ->label(__('Verify')),
         ];
     }
 }

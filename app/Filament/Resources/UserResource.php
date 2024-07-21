@@ -19,11 +19,14 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Collection;
 use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
 use Ysfkaya\FilamentPhoneInput\Tables\PhoneColumn;
@@ -161,21 +164,33 @@ class UserResource extends Resource
                     ->preload()
                     ->selectablePlaceholder(false)
                     ->relationship('team', 'name'),
+                TrashedFilter::make()
+                    ->native(false)
+                    ->label(__('Deleted')),
+                SelectFilter::make('roles')
+                    ->label(__('Roles'))
+                    ->native(false)
+                    ->preload()
+                    ->multiple()
+                    ->relationship('roles', 'name'),
+                SelectFilter::make('is_blocked')
+                    ->label(__('Blocked'))
+                    ->native(false)
+                    ->placeholder(__('All'))
+                    ->options([
+                        '1' => __('Yes'),
+                        '0' => __('No'),
+                    ]),
             ], layout: FiltersLayout::AboveContent)
             ->actions([
                 ActionGroup::make([
                     Action::make('verify')
                         ->label(__('Verify'))
                         ->color('success')
-                        ->visible(fn (User $record) => !$record->hasVerifiedEmail())
+                        ->visible(fn (User $record) => ! $record->hasVerifiedEmail())
                         ->icon('heroicon-s-check-circle')
                         ->action(fn (User $record) => $record->markEmailAsVerified()),
-                    Action::make('unverify')
-                        ->label(__('Unverify'))
-                        ->color('danger')
-                        ->visible(fn (User $record) => $record->hasVerifiedEmail())
-                        ->icon('heroicon-s-x-circle')
-                        ->action(fn (User $record) => $record->forceFill(['email_verified_at' => null])->save()),
+                    RestoreAction::make(),
                     EditAction::make(),
                 ])
                     ->tooltip(__('Actions')),
@@ -189,12 +204,6 @@ class UserResource extends Resource
                         ->icon('heroicon-s-check-circle')
                         ->action(fn (Collection $records) => $records->each(fn (User $record) => $record->markEmailAsVerified()))
                         ->requiresConfirmation(),
-                    Action::make('unverify_selected')
-                        ->label(__('Unverify Selected'))
-                        ->color('danger')
-                        ->icon('heroicon-s-x-circle')
-                        ->action(fn (Collection $records) => $records->each(fn (User $record) => $record->forceFill(['email_verified_at' => null])->save()))
-                        ->requiresConfirmation(),
                     DeleteBulkAction::make(),
                 ]),
             ])
@@ -206,6 +215,14 @@ class UserResource extends Resource
             ->emptyStateHeading(__('No Users'))
             ->defaultGroup('team.name')
             ->modifyQueryUsing(fn (Builder $query) => $query->where('id', '!=', auth()->id()));
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 
     public static function canCreate(): bool

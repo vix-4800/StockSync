@@ -28,7 +28,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole(UserRole::ADMIN);
+        return false;
     }
 
     /**
@@ -59,6 +59,30 @@ class UserPolicy
      * Determine whether the user can permanently delete the model.
      */
     public function forceDelete(User $user, User $model): bool
+    {
+        return $user->hasRole(UserRole::ADMIN);
+    }
+
+    /**
+     * Determine whether the user can delete any models.
+     */
+    public function deleteAny(User $user): bool
+    {
+        return $user->hasRole(UserRole::ADMIN);
+    }
+
+    /**
+     * Determine whether the user can restore any models.
+     */
+    public function restoreAny(User $user): bool
+    {
+        return $user->hasRole(UserRole::ADMIN);
+    }
+
+    /**
+     * Determine whether the user can permanently delete any models.
+     */
+    public function forceDeleteAny(User $user): bool
     {
         return $user->hasRole(UserRole::ADMIN);
     }
