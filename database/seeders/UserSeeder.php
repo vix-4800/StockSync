@@ -30,12 +30,26 @@ class UserSeeder extends Seeder
             'phone' => $this->faker->phoneNumber,
         ]);
 
-        $user = User::create([
+        User::create([
             'name' => 'Manager',
             'email' => 'manager@localhost',
             'password' => bcrypt('manager'),
             'team_id' => $team->id,
+            'role' => UserRole::MANAGER->value,
         ]);
-        $user->assignRole(UserRole::MANAGER);
+
+        User::create([
+            'name' => 'User 1',
+            'email' => 'user@localhost',
+            'password' => bcrypt('user'),
+            'team_id' => $team->id,
+        ]);
+
+        User::create([
+            'name' => 'User 2',
+            'email' => 'user2@localhost',
+            'password' => bcrypt('user'),
+            'team_id' => $team->id,
+        ]);
     }
 }

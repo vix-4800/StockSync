@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
+use App\Enums\UserRole;
 use App\Filament\Admin\Resources\UserResource\Pages\EditUser;
 use App\Filament\Admin\Resources\UserResource\Pages\ListUsers;
 use App\Models\User;
@@ -89,12 +90,14 @@ class UserResource extends Resource
                             ->placeholder(__('Not Defined'))
                             ->preload()
                             ->relationship('team', 'name'),
-                        Select::make('roles')
-                            ->label(__('Roles'))
-                            ->multiple()
-                            ->relationship('roles', 'name')
-                            ->preload()
-                            ->searchable()
+                        Select::make('role')
+                            ->native(false)
+                            ->options([
+                                UserRole::MANAGER->value => __('Manager'),
+                                UserRole::ADMIN->value => __('Admin'),
+                                UserRole::USER->value => __('User'),
+                            ])
+                            ->label(__('Role'))
                             ->placeholder(__('None')),
                     ])
                     ->columns(2),
@@ -133,11 +136,10 @@ class UserResource extends Resource
                     ->placeholder(__('Not Defined'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('roles.name')
+                TextColumn::make('role')
                     ->badge()
-                    ->wrap()
                     ->toggleable()
-                    ->label(__('Roles')),
+                    ->label(__('Role')),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->label(__('Created At'))
@@ -168,12 +170,14 @@ class UserResource extends Resource
                 TrashedFilter::make()
                     ->native(false)
                     ->label(__('Deleted')),
-                SelectFilter::make('roles')
-                    ->label(__('Roles'))
-                    ->native(false)
-                    ->preload()
-                    ->multiple()
-                    ->relationship('roles', 'name'),
+                SelectFilter::make('role')
+                    ->label(__('Role'))
+                    ->options([
+                        UserRole::MANAGER->value => __('Manager'),
+                        UserRole::USER->value => __('User'),
+                        UserRole::ADMIN->value => __('Admin'),
+                    ])
+                    ->native(false),
                 SelectFilter::make('is_blocked')
                     ->label(__('Blocked'))
                     ->native(false)

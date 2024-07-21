@@ -16,6 +16,34 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property string $email
+ * @property string $token
+ * @property \Illuminate\Support\Carbon|null $expires_at
+ * @property \App\Enums\InvitationStatus $status
+ * @property int $team_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Team|null $team
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation query()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation whereExpiresAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation whereTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation whereToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation whereUpdatedAt($value)
+ */
+	class EmployeeInvitation extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property int $team_id
  * @property string $name
  * @property \App\Enums\Marketplace $marketplace
@@ -72,6 +100,9 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $employees
  * @property-read int|null $employees_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EmployeeInvitation> $invitations
+ * @property-read int|null $invitations_count
+ * @property-read \App\Models\User|null $manager
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MarketplaceAccount> $marketplaceAccounts
  * @property-read int|null $marketplace_accounts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MarketplaceAccount> $marketplaceOzonAccounts
@@ -117,6 +148,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \App\Enums\UserRole $role
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Role> $roles

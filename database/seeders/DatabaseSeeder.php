@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
         Cache::flush();
 
         $seeders = [
-            RoleSeeder::class,
             AdminSeeder::class,
             UserSeeder::class,
         ];

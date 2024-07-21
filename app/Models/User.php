@@ -34,6 +34,7 @@ class User extends Authenticatable implements FilamentUser
         'team_id',
         'is_blocked',
         'phone',
+        'role',
     ];
 
     /**
@@ -56,6 +57,7 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'is_blocked' => 'boolean',
+        'role' => UserRole::class,
     ];
 
     /**
@@ -63,7 +65,7 @@ class User extends Authenticatable implements FilamentUser
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasRole(UserRole::ADMIN) || $this->hasTeam();
+        return $this->isAdmin() || $this->hasTeam();
     }
 
     /**
@@ -80,6 +82,15 @@ class User extends Authenticatable implements FilamentUser
     public function hasTeam(): bool
     {
         return $this->team_id !== null;
+    }
+
+    /**
+     * Fire the user.
+     */
+    public function fire(): void
+    {
+        $this->team_id = null;
+        $this->save();
     }
 
     /**

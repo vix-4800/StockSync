@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserRole;
 use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->string('theme_color')->nullable();
             $table->json('custom_fields')->nullable();
             $table->string('avatar_url')->nullable();
+            $table->enum('role', UserRole::values())->default(UserRole::USER);
             $table->boolean('is_blocked')->default(false);
             $table->foreignIdFor(Team::class)->nullable()->cascadeOnDelete();
             $table->rememberToken();
