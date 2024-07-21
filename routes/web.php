@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Middleware\IsBlockedMiddleware;
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,4 +11,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/account', 301)->middleware(IsBlockedMiddleware::class);
+Route::redirect('/', '/account/login');
+Route::redirect('/admin/login', '/account/login');

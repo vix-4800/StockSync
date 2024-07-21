@@ -15,6 +15,10 @@ class IsBlockedMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (auth()->check() && auth()->user()->isBlocked()) {
+            abort(403);
+        }
+
         return $next($request);
     }
 }

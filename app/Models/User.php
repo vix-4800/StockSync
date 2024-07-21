@@ -63,7 +63,7 @@ class User extends Authenticatable implements FilamentUser
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        return ($this->hasRole(UserRole::ADMIN) || isset($this->team)) && ! $this->isBlocked();
+        return $this->hasRole(UserRole::ADMIN) || $this->hasTeam();
     }
 
     /**
@@ -72,6 +72,14 @@ class User extends Authenticatable implements FilamentUser
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
+    }
+
+    /**
+     * Check if the user has a team.
+     */
+    public function hasTeam(): bool
+    {
+        return $this->team_id !== null;
     }
 
     /**
