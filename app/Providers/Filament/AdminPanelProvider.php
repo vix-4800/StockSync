@@ -67,6 +67,7 @@ class AdminPanelProvider extends PanelProvider
                     ->setNavigationLabel(__('Edit Profile'))
                     ->setIcon('heroicon-o-user'),
             ])
-            ->unsavedChangesAlerts();
+            ->unsavedChangesAlerts()
+            ->databaseNotifications();
     }
 }

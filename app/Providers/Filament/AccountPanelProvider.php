@@ -77,6 +77,7 @@ class AccountPanelProvider extends PanelProvider
                         rules: 'mimes:jpeg,png|max:1024'
                     ),
             ])
-            ->unsavedChangesAlerts();
+            ->unsavedChangesAlerts()
+            ->databaseNotifications();
     }
 }
