@@ -43,6 +43,7 @@ class UserSeeder extends Seeder
             'email' => 'user@localhost',
             'password' => bcrypt('user'),
             'team_id' => $team->id,
+            'phone' => $this->faker->phoneNumber,
         ]);
 
         User::create([
@@ -50,6 +51,7 @@ class UserSeeder extends Seeder
             'email' => 'user2@localhost',
             'password' => bcrypt('user'),
             'team_id' => $team->id,
+            'phone' => $this->faker->phoneNumber,
         ]);
     }
 }
