@@ -24,6 +24,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 
@@ -87,6 +88,13 @@ class MarketplaceAccountResource extends Resource
                             ->label(__('API Token'))
                             ->columnSpanFull()
                             ->placeholder(__('Not Defined'))
+                            ->helperText(fn (Get $get): string => match ($get('marketplace')) {
+                                Marketplace::WILDBERRIES->value => __('Account -> Settings -> API Access -> Create a new token'),
+                                Marketplace::OZON->value => __('Select \'Settings\' -> Go to \'API Keys\' -> Click \'Generate Key\' -> Click \'Generate\''),
+                                default => '',
+                            })
+                            ->hint(fn (Get $get): ?View => $get('marketplace') == Marketplace::WILDBERRIES->value ? view('components.wildberries-token-types') : null)
+                            ->hintColor('primary')
                             ->required(),
                         TextInput::make('api_user_id')
                             ->placeholder(__('Not Defined'))
