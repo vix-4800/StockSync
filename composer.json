@@ -19,6 +19,8 @@
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
         "shuvroroy/filament-spatie-laravel-backup": "^2.2",
+        "shuvroroy/filament-spatie-laravel-health": "^2.0",
+        "spatie/security-advisories-health-check": "^1.2",
         "ysfkaya/filament-phone-input": "^2.3"
     },
     "require-dev": {

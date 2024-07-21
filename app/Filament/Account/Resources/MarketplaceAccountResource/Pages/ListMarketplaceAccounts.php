@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Account\Resources\MarketplaceAccountResource\Pages;
 
 use App\Filament\Account\Resources\MarketplaceAccountResource;

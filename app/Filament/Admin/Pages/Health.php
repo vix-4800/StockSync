@@ -6,13 +6,13 @@ namespace App\Filament\Admin\Pages;
 
 use Auth;
 use Illuminate\Contracts\Support\Htmlable;
-use ShuvroRoy\FilamentSpatieLaravelBackup\Pages\Backups as BaseBackups;
+use ShuvroRoy\FilamentSpatieLaravelHealth\Pages\HealthCheckResults as BaseHealthCheckResults;
 
-class Backups extends BaseBackups
+class Health extends BaseHealthCheckResults
 {
-    protected static ?string $navigationIcon = 'heroicon-o-cpu-chip';
+    // protected static ?string $navigationIcon = 'heroicon-o-cpu-chip';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function canAccess(): bool
     {
