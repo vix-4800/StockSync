@@ -17,10 +17,10 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $email
- * @property string $token
- * @property \Illuminate\Support\Carbon|null $expires_at
- * @property \App\Enums\InvitationStatus $status
  * @property int $team_id
+ * @property string $token
+ * @property \App\Enums\InvitationStatus $status
+ * @property \Illuminate\Support\Carbon|null $expires_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Team|null $team

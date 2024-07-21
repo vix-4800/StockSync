@@ -41,4 +41,18 @@ class EmployeeInvitation extends Model
     {
         return $this->belongsTo(Team::class);
     }
+
+    /**
+     * Invalidate the invitation.
+     */
+    public function invalidate(): bool
+    {
+        if ($this->status == InvitationStatus::PENDING) {
+            $this->status = InvitationStatus::INVALIDATED;
+
+            return $this->save();
+        }
+
+        return false;
+    }
 }

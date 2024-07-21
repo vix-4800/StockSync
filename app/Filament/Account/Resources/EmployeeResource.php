@@ -7,6 +7,7 @@ namespace App\Filament\Account\Resources;
 use App\Filament\Account\Resources\EmployeeResource\Pages\ListEmployees;
 use App\Filament\Account\Resources\EmployeeResource\Pages\ViewEmployee;
 use App\Models\User;
+use Auth;
 use Filament\Infolists\Components\Fieldset as InfolistFieldset;
 use Filament\Infolists\Components\Section as InfolistSection;
 use Filament\Infolists\Components\TextEntry;
@@ -29,7 +30,7 @@ class EmployeeResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()->isManager();
+        return Auth::user()->isManager();
     }
 
     public static function getNavigationGroup(): ?string
@@ -49,7 +50,7 @@ class EmployeeResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return auth()->user()
+        return Auth::user()
             ->team
             ->employees()
             ->getQuery();
@@ -86,6 +87,7 @@ class EmployeeResource extends Resource
             ->columns([
                 ImageColumn::make('avatar_url')
                     ->label(__('Avatar'))
+                    ->circular()
                     ->defaultImageUrl(fn (User $record): string => $record->getFilamentDefaultAvatarUrl())
                     ->toggleable(),
                 TextColumn::make('name')

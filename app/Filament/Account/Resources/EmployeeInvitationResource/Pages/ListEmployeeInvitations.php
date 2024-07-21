@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Account\Resources\EmployeeResource\Pages;
+namespace App\Filament\Account\Resources\EmployeeInvitationResource\Pages;
 
 use App\Enums\InvitationStatus;
-use App\Filament\Account\Resources\EmployeeResource;
+use App\Filament\Account\Resources\EmployeeInvitationResource;
 use App\Models\EmployeeInvitation;
 use Auth;
 use Filament\Actions\Action;
@@ -14,9 +14,9 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Str;
 
-class ListEmployees extends ListRecords
+class ListEmployeeInvitations extends ListRecords
 {
-    protected static string $resource = EmployeeResource::class;
+    protected static string $resource = EmployeeInvitationResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -52,7 +52,6 @@ class ListEmployees extends ListRecords
                 ->form([
                     TextInput::make('email')
                         ->required()
-                        ->unique()
                         ->placeholder('Email Address')
                         ->label(__('Email Address'))
                         ->prefixIcon('heroicon-o-envelope')
