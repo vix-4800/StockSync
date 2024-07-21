@@ -22,6 +22,7 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\RestoreAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
@@ -108,8 +109,10 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('avatar_url')
+                ImageColumn::make('avatar_url')
                     ->label(__('Avatar'))
+                    ->circular()
+                    ->defaultImageUrl(fn (User $record): string => $record->getFilamentDefaultAvatarUrl())
                     ->toggleable(),
                 TextColumn::make('name')
                     ->label(__('Name'))

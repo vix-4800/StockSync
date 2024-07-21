@@ -70,7 +70,13 @@ class AccountPanelProvider extends PanelProvider
                     ->setNavigationGroup(__('Personal'))
                     ->setTitle(__('Edit Profile'))
                     ->setNavigationLabel(__('Edit Profile'))
-                    ->setIcon('heroicon-o-user'),
-            ]);
+                    ->setIcon('heroicon-o-user')
+                    ->shouldShowAvatarForm(
+                        value: true,
+                        directory: 'avatars',
+                        rules: 'mimes:jpeg,png|max:1024'
+                    ),
+            ])
+            ->unsavedChangesAlerts();
     }
 }

@@ -7,14 +7,16 @@ namespace App\Models;
 use App\Enums\UserRole;
 use App\Traits\HasRoles;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     use HasFactory, HasRoles, Notifiable, SoftDeletes;
 
@@ -30,10 +32,10 @@ class User extends Authenticatable implements FilamentUser
         'theme',
         'theme_color',
         'custom_fields',
-        'avatar_url',
         'team_id',
         'is_blocked',
         'phone',
+        'avatar_url',
         'role',
     ];
 
@@ -108,5 +110,23 @@ class User extends Authenticatable implements FilamentUser
     {
         $this->is_blocked = ! $this->is_blocked;
         $this->save();
+    }
+
+    /**
+     * Get the avatar URL for the user.
+     */
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar_url
+            ? Storage::url("$this->avatar_url")
+            : $this->getFilamentDefaultAvatarUrl();
+    }
+
+    /**
+     * Get the default avatar URL for the user.
+     */
+    public function getFilamentDefaultAvatarUrl(): ?string
+    {
+        return 'https://ui-avatars.com/api/?name='.$this->name.'&rounded=true&background=000&color=fff';
     }
 }

@@ -13,6 +13,7 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Hasnayeen\Themes\Http\Middleware\SetTheme;
 use Hasnayeen\Themes\ThemesPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -51,6 +52,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                SetTheme::class,
                 IsBlockedMiddleware::class,
                 IsAdminMiddleware::class,
             ])
@@ -64,6 +66,7 @@ class AdminPanelProvider extends PanelProvider
                     ->setTitle(__('Edit Profile'))
                     ->setNavigationLabel(__('Edit Profile'))
                     ->setIcon('heroicon-o-user'),
-            ]);
+            ])
+            ->unsavedChangesAlerts();
     }
 }
