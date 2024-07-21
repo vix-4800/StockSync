@@ -10,9 +10,7 @@ use ShuvroRoy\FilamentSpatieLaravelHealth\Pages\HealthCheckResults as BaseHealth
 
 class Health extends BaseHealthCheckResults
 {
-    // protected static ?string $navigationIcon = 'heroicon-o-cpu-chip';
-
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 4;
 
     public static function canAccess(): bool
     {

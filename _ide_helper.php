@@ -23253,6 +23253,14 @@ namespace NunoMaduro\Collision\Adapters\Laravel\Commands {
             }
     }
 
+namespace Spatie\Activitylog {
+            /**
+     * 
+     *
+     */        class CleanActivitylogCommand {
+            }
+    }
+
 namespace Spatie\Backup\Commands {
             /**
      * 

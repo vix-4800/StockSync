@@ -10,9 +10,7 @@ use ShuvroRoy\FilamentSpatieLaravelBackup\Pages\Backups as BaseBackups;
 
 class Backups extends BaseBackups
 {
-    protected static ?string $navigationIcon = 'heroicon-o-cpu-chip';
-
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function canAccess(): bool
     {

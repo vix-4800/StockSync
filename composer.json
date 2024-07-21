@@ -18,8 +18,10 @@
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
+        "pxlrbt/filament-activity-log": "^1.1",
         "shuvroroy/filament-spatie-laravel-backup": "^2.2",
         "shuvroroy/filament-spatie-laravel-health": "^2.0",
+        "spatie/laravel-activitylog": "^4.8",
         "spatie/security-advisories-health-check": "^1.2",
         "ysfkaya/filament-phone-input": "^2.3"
     },

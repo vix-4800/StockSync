@@ -107,7 +107,7 @@ class MarketplaceAccountResource extends Resource
                             ->default(now())
                             ->placeholder(__('Not Defined'))
                             ->live()
-                            ->before(now())
+                            ->before(fn (Get $get): ?Carbon => $get('api_token_expires_at') ? Carbon::parse($get('api_token_expires_at')) : null)
                             ->native(false)
                             ->label(__('API Token Created At')),
                         Placeholder::make('api_token_expires_at')

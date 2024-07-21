@@ -50,7 +50,7 @@ class AppServiceProvider extends ServiceProvider
         Health::checks([
             DatabaseCheck::new(),
             CacheCheck::new(),
-            BackupsCheck::new()->locatedAt(storage_path('app/' . config('app.name') . '/*.zip')),
+            BackupsCheck::new()->locatedAt(storage_path('app/'.config('app.name').'/*.zip')),
             OptimizedAppCheck::new(),
             DebugModeCheck::new(),
             EnvironmentCheck::new(),

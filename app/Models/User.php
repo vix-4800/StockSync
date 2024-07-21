@@ -15,10 +15,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
-    use HasFactory, HasRoles, Notifiable, SoftDeletes;
+    use HasFactory, HasRoles, LogsActivity, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -128,5 +130,10 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     public function getFilamentDefaultAvatarUrl(): ?string
     {
         return 'https://ui-avatars.com/api/?name='.$this->name.'&rounded=true&background=000&color=fff';
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
     }
 }

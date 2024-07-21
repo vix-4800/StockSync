@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Admin\Resources\UserResource\Pages;
 
 use App\Filament\Admin\Resources\UserResource;
-use Filament\Resources\Pages\ListRecords;
+use pxlrbt\FilamentActivityLog\Pages\ListActivities;
 
-class ListUsers extends ListRecords
+class UserActivities extends ListActivities
 {
     protected static string $resource = UserResource::class;
 }

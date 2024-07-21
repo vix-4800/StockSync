@@ -7,6 +7,7 @@ namespace App\Filament\Admin\Resources;
 use App\Enums\UserRole;
 use App\Filament\Admin\Resources\UserResource\Pages\EditUser;
 use App\Filament\Admin\Resources\UserResource\Pages\ListUsers;
+use App\Filament\Admin\Resources\UserResource\Pages\UserActivities;
 use App\Models\User;
 use Archilex\ToggleIconColumn\Columns\ToggleIconColumn;
 use Filament\Forms\Components\DateTimePicker;
@@ -63,6 +64,7 @@ class UserResource extends Resource
                         DateTimePicker::make('email_verified_at')
                             ->placeholder(__('Not Verified'))
                             ->native(false)
+                            ->disabled(fn (User $record): bool => $record->hasVerifiedEmail())
                             ->label(__('Email Verified At')),
                         Fieldset::make(__('Contact Info'))
                             ->schema([
@@ -200,6 +202,8 @@ class UserResource extends Resource
                         ->visible(fn (User $record) => ! $record->hasVerifiedEmail())
                         ->icon('heroicon-s-check-circle')
                         ->action(fn (User $record) => $record->markEmailAsVerified()),
+                    Action::make('activities')
+                        ->url(fn ($record) => UserResource::getUrl('activities', ['record' => $record])),
                     RestoreAction::make(),
                     EditAction::make(),
                 ])
@@ -240,17 +244,11 @@ class UserResource extends Resource
         return false;
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
             'index' => ListUsers::route('/'),
+            'activities' => UserActivities::route('/{record}/activities'),
             'edit' => EditUser::route('/{record}/edit'),
         ];
     }
