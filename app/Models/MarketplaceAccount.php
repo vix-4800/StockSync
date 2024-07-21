@@ -24,6 +24,7 @@ class MarketplaceAccount extends Model
         'marketplace',
         'api_token',
         'api_user_id',
+        'api_token_created_at',
         'api_token_expires_at',
     ];
 
@@ -33,7 +34,8 @@ class MarketplaceAccount extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'api_token_expires_at' => 'datetime',
+        'api_token_created_at' => 'date',
+        'api_token_expires_at' => 'date',
         'marketplace' => Marketplace::class,
     ];
 

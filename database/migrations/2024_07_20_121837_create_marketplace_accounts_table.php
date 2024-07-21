@@ -19,9 +19,10 @@ return new class extends Migration
             $table->foreignIdFor(Team::class)->cascadeOnDelete();
             $table->string('name');
             $table->enum('marketplace', Marketplace::values());
-            $table->string('api_token');
+            $table->text('api_token');
             $table->string('api_user_id')->nullable();
-            $table->timestamp('api_token_expires_at')->nullable();
+            $table->date('api_token_created_at')->nullable();
+            $table->date('api_token_expires_at')->nullable();
 
             $table->unique(['team_id', 'name', 'marketplace']);
 

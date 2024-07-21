@@ -49,6 +49,7 @@ namespace App\Models{
  * @property \App\Enums\Marketplace $marketplace
  * @property string $api_token
  * @property string|null $api_user_id
+ * @property \Illuminate\Support\Carbon|null $api_token_created_at
  * @property \Illuminate\Support\Carbon|null $api_token_expires_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -57,6 +58,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|MarketplaceAccount newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MarketplaceAccount query()
  * @method static \Illuminate\Database\Eloquent\Builder|MarketplaceAccount whereApiToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MarketplaceAccount whereApiTokenCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MarketplaceAccount whereApiTokenExpiresAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MarketplaceAccount whereApiUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MarketplaceAccount whereCreatedAt($value)
