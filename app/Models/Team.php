@@ -65,4 +65,12 @@ class Team extends Model
     {
         return $this->hasMany(MarketplaceAccount::class)->where('marketplace', Marketplace::WILDBERRIES);
     }
+
+    /**
+     * Get the invitations that belong to the team.
+     */
+    public function invitations(): HasMany
+    {
+        return $this->hasMany(EmployeeInvitation::class);
+    }
 }
