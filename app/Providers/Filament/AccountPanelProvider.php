@@ -6,6 +6,7 @@ namespace App\Providers\Filament;
 
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Middleware\IsBlockedMiddleware;
+use Auth;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -23,6 +24,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Saade\FilamentLaravelLog\FilamentLaravelLogPlugin;
 
 class AccountPanelProvider extends PanelProvider
 {
@@ -76,6 +78,13 @@ class AccountPanelProvider extends PanelProvider
                         directory: 'avatars',
                         rules: 'mimes:jpeg,png|max:1024'
                     ),
+                FilamentLaravelLogPlugin::make()
+                    ->navigationGroup('System Tools')
+                    ->navigationLabel('Logs')
+                    ->navigationIcon('heroicon-o-bug-ant')
+                    ->navigationSort(1)
+                    ->authorize(fn (): bool => Auth::user()->isAdmin())
+                    ->slug('logs'),
             ])
             // ->favicon(asset('img/favicon-32x32.png'))
             ->unsavedChangesAlerts()

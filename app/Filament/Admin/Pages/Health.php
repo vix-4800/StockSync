@@ -10,7 +10,7 @@ use ShuvroRoy\FilamentSpatieLaravelHealth\Pages\HealthCheckResults as BaseHealth
 
 class Health extends BaseHealthCheckResults
 {
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 3;
 
     public static function canAccess(): bool
     {
@@ -19,7 +19,7 @@ class Health extends BaseHealthCheckResults
 
     public function getHeading(): string|Htmlable
     {
-        return 'Application Backups';
+        return __('Health Check');
     }
 
     public static function getNavigationGroup(): ?string

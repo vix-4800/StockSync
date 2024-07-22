@@ -10,7 +10,7 @@ use ShuvroRoy\FilamentSpatieLaravelBackup\Pages\Backups as BaseBackups;
 
 class Backups extends BaseBackups
 {
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 2;
 
     public static function canAccess(): bool
     {
@@ -19,7 +19,7 @@ class Backups extends BaseBackups
 
     public function getHeading(): string|Htmlable
     {
-        return 'Application Backups';
+        return __('Application Backups');
     }
 
     public static function getNavigationGroup(): ?string
