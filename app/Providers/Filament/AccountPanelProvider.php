@@ -25,6 +25,8 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Saade\FilamentLaravelLog\FilamentLaravelLogPlugin;
+use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
+use Swis\Filament\Backgrounds\ImageProviders\MyImages;
 
 class AccountPanelProvider extends PanelProvider
 {
@@ -85,6 +87,10 @@ class AccountPanelProvider extends PanelProvider
                     ->navigationSort(1)
                     ->authorize(fn (): bool => Auth::user()->isAdmin())
                     ->slug('logs'),
+                FilamentBackgroundsPlugin::make()
+                    ->showAttribution(false)
+                    ->imageProvider(MyImages::make()
+                        ->directory('images/filament-backgrounds')),
             ])
             // ->favicon(asset('img/favicon-32x32.png'))
             ->unsavedChangesAlerts()
