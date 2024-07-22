@@ -11,6 +11,7 @@
         "php": "^8.2",
         "archilex/filament-toggle-icon-column": "^3.1",
         "bezhansalleh/filament-language-switch": "^3.1",
+        "encodia/laravel-health-env-vars": "^1.8",
         "filament/filament": "^3.2",
         "hasnayeen/themes": "^3.0",
         "joaopaulolndev/filament-edit-profile": "^1.0",

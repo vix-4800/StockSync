@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use App\Http\Responses\LogoutResponse;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
+use Encodia\Health\Checks\EnvVars;
 use Filament\Http\Responses\Auth\Contracts\LogoutResponse as LogoutResponseContract;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -57,6 +58,32 @@ class AppServiceProvider extends ServiceProvider
             QueueCheck::new()->onQueue('default'),
             ScheduleCheck::new(),
             SecurityAdvisoriesCheck::new(),
+            EnvVars::new()
+                ->requireVars([
+                    'DB_DATABASE',
+                    'DB_USERNAME',
+                    'DB_PASSWORD',
+
+                    'MAIL_MAILER',
+                    'MAIL_HOST',
+                    'MAIL_PORT',
+                    'MAIL_USERNAME',
+                    // 'MAIL_PASSWORD',
+                    'MAIL_ENCRYPTION',
+                    'MAIL_FROM_ADDRESS',
+                    'MAIL_FROM_NAME',
+                    'MAIL_FROM_ADDRESS',
+                    'MAIL_BACKUP_HOST',
+
+                    'DEEP_LINKS_URL',
+
+                    'YANDEXGPT_FODER_ID',
+                    'YANDEXGPT_FINETUNED_MODEL',
+                    'YANDEXGPT_IAM_TOKEN',
+
+                    'TELEGRAM_BOT_TOKEN',
+                    'TELEGRAM_WEBHOOK_URL',
+                ]),
         ]);
     }
 }
