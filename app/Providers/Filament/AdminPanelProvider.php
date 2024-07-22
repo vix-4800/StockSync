@@ -6,8 +6,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Admin\Pages\Backups;
 use App\Filament\Admin\Pages\Health;
-use App\Http\Middleware\IsAdminMiddleware;
-use App\Http\Middleware\IsBlockedMiddleware;
+use App\Models\Admin;
 use Auth;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -40,6 +39,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->login()
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->pages([
@@ -58,8 +58,6 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
                 SetTheme::class,
-                IsBlockedMiddleware::class,
-                IsAdminMiddleware::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
@@ -81,11 +79,12 @@ class AdminPanelProvider extends PanelProvider
                     ->navigationLabel(__('Logs'))
                     ->navigationIcon('heroicon-o-bug-ant')
                     ->navigationSort(4)
-                    ->authorize(fn (): bool => Auth::user()->isAdmin())
+                    ->authorize(fn (): bool => Auth::user() instanceof Admin)
                     ->slug('logs'),
             ])
             ->favicon(asset('images/sellersphere/favicon.ico'))
             ->unsavedChangesAlerts()
+            ->authGuard('admin')
             ->databaseNotifications();
     }
 }

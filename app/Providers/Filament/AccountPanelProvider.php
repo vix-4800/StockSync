@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
-use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Middleware\IsBlockedMiddleware;
+use App\Models\Admin;
 use Auth;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -63,7 +63,6 @@ class AccountPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
                 SetTheme::class,
                 IsBlockedMiddleware::class,
-                IsAdminMiddleware::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
@@ -85,7 +84,7 @@ class AccountPanelProvider extends PanelProvider
                     ->navigationLabel('Logs')
                     ->navigationIcon('heroicon-o-bug-ant')
                     ->navigationSort(1)
-                    ->authorize(fn (): bool => Auth::user()->isAdmin())
+                    ->authorize(fn (): bool => Auth::user() instanceof Admin)
                     ->slug('logs'),
                 FilamentBackgroundsPlugin::make()
                     ->showAttribution(false)
@@ -93,6 +92,7 @@ class AccountPanelProvider extends PanelProvider
                         ->directory('images/filament-backgrounds')),
             ])
             ->favicon(asset('images/sellersphere/favicon.ico'))
+            ->authGuard('web')
             ->unsavedChangesAlerts()
             ->databaseNotifications();
     }

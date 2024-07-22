@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Enums\UserRole;
-use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
@@ -15,11 +14,10 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        Admin::create([
             'name' => 'Admin',
             'email' => 'admin@localhost',
             'password' => bcrypt('admin'),
-            'role' => UserRole::ADMIN->value,
         ]);
     }
 }

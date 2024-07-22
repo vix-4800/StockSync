@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use App\Enums\UserRole;
-use App\Models\Role;
 
 trait HasRoles
 {
@@ -25,14 +24,6 @@ trait HasRoles
     {
         $this->role = null;
         $this->save();
-    }
-
-    /**
-     * Determine if the user is an admin.
-     */
-    public function isAdmin(): bool
-    {
-        return $this->role === UserRole::ADMIN;
     }
 
     /**

@@ -12,4 +12,3 @@
 */
 
 Route::redirect('/', '/account/login');
-Route::redirect('/admin/login', '/account/login');

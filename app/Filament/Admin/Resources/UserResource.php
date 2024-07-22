@@ -99,7 +99,6 @@ class UserResource extends Resource
                             ->native(false)
                             ->options([
                                 UserRole::MANAGER->value => __('Manager'),
-                                UserRole::ADMIN->value => __('Admin'),
                                 UserRole::USER->value => __('User'),
                             ])
                             ->label(__('Role'))
@@ -182,7 +181,6 @@ class UserResource extends Resource
                     ->options([
                         UserRole::MANAGER->value => __('Manager'),
                         UserRole::USER->value => __('User'),
-                        UserRole::ADMIN->value => __('Admin'),
                     ])
                     ->native(false),
                 SelectFilter::make('is_blocked')
@@ -227,8 +225,7 @@ class UserResource extends Resource
                     ->label(__('Columns')),
             )
             ->emptyStateHeading(__('No Users'))
-            ->defaultGroup('team.name')
-            ->modifyQueryUsing(fn (Builder $query) => $query->where('id', '!=', auth()->id()));
+            ->defaultGroup('team.name');
     }
 
     public static function getEloquentQuery(): Builder
@@ -237,11 +234,6 @@ class UserResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
-    }
-
-    public static function canCreate(): bool
-    {
-        return false;
     }
 
     public static function getPages(): array
