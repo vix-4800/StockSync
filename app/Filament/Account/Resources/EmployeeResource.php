@@ -53,6 +53,7 @@ class EmployeeResource extends Resource
         return Auth::user()
             ->team
             ->employees()
+            ->with('team')
             ->getQuery();
     }
 

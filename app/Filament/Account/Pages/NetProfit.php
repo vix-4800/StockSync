@@ -2,6 +2,7 @@
 
 namespace App\Filament\Account\Pages;
 
+use Auth;
 use Filament\Pages\Page;
 
 class NetProfit extends Page
@@ -23,5 +24,13 @@ class NetProfit extends Page
     public static function canAccess(): bool
     {
         return true;
+    }
+
+    public $accounts;
+    public $selectedAccount;
+
+    public function mount(): void
+    {
+        $this->accounts = Auth::user()->team->marketplaceAccounts;
     }
 }
