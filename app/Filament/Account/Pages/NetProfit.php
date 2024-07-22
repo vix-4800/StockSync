@@ -27,6 +27,7 @@ class NetProfit extends Page
     }
 
     public $accounts;
+
     public $selectedAccount;
 
     public function mount(): void

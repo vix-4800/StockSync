@@ -16,6 +16,7 @@
         "firebase/php-jwt": "^6.10",
         "hasnayeen/themes": "^3.0",
         "joaopaulolndev/filament-edit-profile": "^1.0",
+        "lara-zeus/qr": "^1.1",
         "laravel-frontend-presets/tall": "^8.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",

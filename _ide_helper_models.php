@@ -51,6 +51,38 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property int $user_id
+ * @property string $name
+ * @property \App\Enums\Marketplace $marketplace
+ * @property string $generated_url
+ * @property bool $is_archived
+ * @property string $qr_code
+ * @property array|null $options
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink query()
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereGeneratedUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereIsArchived($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereMarketplace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereOptions($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereQrCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereUserId($value)
+ */
+	class DeepLink extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property string $email
  * @property int $team_id
  * @property string $token
@@ -165,10 +197,20 @@ namespace App\Models{
 /**
  * 
  *
+ * @property int $id
+ * @property int $user_id
+ * @property string $token
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken query()
+ * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken whereToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken whereUserId($value)
  */
 	class TelegramToken extends \Eloquent {}
 }
@@ -196,6 +238,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\DeepLink> $deepLinks
+ * @property-read int|null $deep_links_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \App\Models\Team|null $team
