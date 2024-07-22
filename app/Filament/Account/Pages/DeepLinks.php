@@ -19,4 +19,9 @@ class DeepLinks extends Page
     {
         return __('Deep Links');
     }
+
+    public static function canAccess(): bool
+    {
+        return true;
+    }
 }

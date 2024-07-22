@@ -11,6 +11,7 @@ use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -143,5 +144,13 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults();
+    }
+
+    /**
+     * Get the telegram token for the user.
+     */
+    public function telegramToken(): HasOne
+    {
+        return $this->hasOne(TelegramToken::class);
     }
 }

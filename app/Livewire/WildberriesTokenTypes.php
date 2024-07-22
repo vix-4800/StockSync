@@ -23,7 +23,7 @@ class WildberriesTokenTypes extends Component implements HasForms, HasInfolists
         return view('livewire.wildberries-token-types');
     }
 
-    public function productInfolist(Infolist $infolist): Infolist
+    public function tokenTypesInfoList(Infolist $infolist): Infolist
     {
         return $infolist
             ->state([

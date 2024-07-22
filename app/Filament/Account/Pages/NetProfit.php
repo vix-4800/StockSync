@@ -19,4 +19,9 @@ class NetProfit extends Page
     {
         return __('Net Profit Calculator');
     }
+
+    public static function canAccess(): bool
+    {
+        return true;
+    }
 }

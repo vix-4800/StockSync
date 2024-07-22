@@ -13,6 +13,7 @@
         "bezhansalleh/filament-language-switch": "^3.1",
         "encodia/laravel-health-env-vars": "^1.8",
         "filament/filament": "^3.2",
+        "firebase/php-jwt": "^6.10",
         "hasnayeen/themes": "^3.0",
         "joaopaulolndev/filament-edit-profile": "^1.0",
         "laravel-frontend-presets/tall": "^8.0",
