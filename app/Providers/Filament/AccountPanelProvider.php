@@ -92,7 +92,7 @@ class AccountPanelProvider extends PanelProvider
                     ->imageProvider(MyImages::make()
                         ->directory('images/filament-backgrounds')),
             ])
-            // ->favicon(asset('img/favicon-32x32.png'))
+            ->favicon(asset('images/sellersphere/favicon.ico'))
             ->unsavedChangesAlerts()
             ->databaseNotifications();
     }

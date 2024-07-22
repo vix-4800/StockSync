@@ -84,7 +84,7 @@ class AdminPanelProvider extends PanelProvider
                     ->authorize(fn (): bool => Auth::user()->isAdmin())
                     ->slug('logs'),
             ])
-            // ->favicon(asset('img/favicon-32x32.png'))
+            ->favicon(asset('images/sellersphere/favicon.ico'))
             ->unsavedChangesAlerts()
             ->databaseNotifications();
     }
