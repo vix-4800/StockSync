@@ -1,8 +1,7 @@
-favicon
+# To-do list
 
 sticker print
 reviews
 sku planner
-deep links
+deep links statistics
 net profit
-telegram tokens
