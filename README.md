@@ -18,43 +18,62 @@ To get started, follow these steps:
 
 -   Clone the repository:
 
-    `git clone https://github.com/vix-4800/StockSync.git`
+    ```
+    git clone https://github.com/vix-4800/StockSync.git
+    ```
 
 -   Navigate to the project directory:
 
-    `cd stocksync`
+    ```
+    cd stocksync
+    ```
 
 -   Install the dependencies:
 
-    `composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs` & `npm install --omit=dev`
+    ```
+    composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
+    ```
+
+    &
+
+    ```
+    npm install --omit=dev
+    ```
 
 -   Set up your environment variables by copying the .env.example file:
 
-    `cp .env.example .env`
+    ```
+    cp .env.example .env
+    ```
 
 -   Generate an application key:
 
-    `php artisan key:generate`
+    ```
+    php artisan key:generate
+    ```
 
 -   Run the migrations:
 
-    `php artisan migrate --force`
+    ```
+    php artisan migrate --force
+    ```
 
 -   Start the development server:
 
-    `php artisan serve`
+    ```
+    php artisan serve
+    ```
 
 ## Optimization
 
 You can optimize the application performance significantly by running these commands:
 
-`php artisan optimize`
-
-`php artisan view:cache`
-
-`php artisan icons:cache`
-
-`php artisan filament:cache-components`
+```
+php artisan optimize
+php artisan view:cache
+php artisan icons:cache
+php artisan filament:cache-components
+```
 
 ## License
 
