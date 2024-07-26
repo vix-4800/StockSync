@@ -8,6 +8,7 @@ use App\Http\Responses\LogoutResponse;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use Encodia\Health\Checks\EnvVars;
 use Filament\Http\Responses\Auth\Contracts\LogoutResponse as LogoutResponseContract;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Health\Checks\Checks\BackupsCheck;
@@ -36,6 +37,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Disable lazy loading for production
+        Model::preventLazyLoading(! app()->isProduction());
+
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
                 // ->flags([

@@ -11,4 +11,4 @@
 |
 */
 
-Route::redirect('/', '/account/login');
+Route::redirect('/', '/account/login', 301);
