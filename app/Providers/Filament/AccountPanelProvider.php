@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
+use App\Filament\Account\Pages\Auth\Register;
 use App\Http\Middleware\IsBlockedMiddleware;
 use App\Models\Admin;
 use Auth;
@@ -36,7 +37,7 @@ class AccountPanelProvider extends PanelProvider
             ->default()
             ->id('account')
             ->path('account')
-            ->registration()
+            ->registration(Register::class)
             ->default()
             ->passwordReset()
             ->emailVerification()
@@ -80,12 +81,7 @@ class AccountPanelProvider extends PanelProvider
                         rules: 'mimes:jpeg,png|max:1024'
                     ),
                 FilamentLaravelLogPlugin::make()
-                    ->navigationGroup('System Tools')
-                    ->navigationLabel('Logs')
-                    ->navigationIcon('heroicon-o-bug-ant')
-                    ->navigationSort(1)
-                    ->authorize(fn (): bool => Auth::user() instanceof Admin)
-                    ->slug('logs'),
+                    ->authorize(fn (): bool => Auth::user() instanceof Admin),
                 FilamentBackgroundsPlugin::make()
                     ->showAttribution(false)
                     ->imageProvider(MyImages::make()

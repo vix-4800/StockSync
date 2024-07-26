@@ -28,9 +28,9 @@ class EmployeeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    public static function canViewAny(): bool
+    public static function canAccess(): bool
     {
-        return Auth::user()->isManager();
+        return Auth::user()->hasTeam() && Auth::user()->isManager();
     }
 
     public static function getNavigationGroup(): ?string
@@ -50,8 +50,7 @@ class EmployeeResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return Auth::user()
-            ->team
+        return Auth::user()->team
             ->employees()
             ->with('team')
             ->getQuery();

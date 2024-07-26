@@ -27,15 +27,14 @@ class EmployeeInvitationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-envelope';
 
-    public static function canViewAny(): bool
+    public static function canAccess(): bool
     {
-        return Auth::user()->isManager();
+        return Auth::user()->isManager() && Auth::user()->hasTeam();
     }
 
     public static function getEloquentQuery(): Builder
     {
-        return Auth::user()
-            ->team
+        return Auth::user()->team
             ->invitations()
             ->getQuery();
     }

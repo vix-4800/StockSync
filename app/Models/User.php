@@ -76,7 +76,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasTeam();
+        return true;
     }
 
     /**

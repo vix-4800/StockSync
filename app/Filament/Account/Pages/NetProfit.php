@@ -23,7 +23,7 @@ class NetProfit extends Page
 
     public static function canAccess(): bool
     {
-        return true;
+        return Auth::user()->hasTeam();
     }
 
     public $accounts;
@@ -32,6 +32,7 @@ class NetProfit extends Page
 
     public function mount(): void
     {
-        $this->accounts = Auth::user()->team->marketplaceAccounts;
+        $this->accounts = Auth::user()->team
+            ->marketplaceAccounts;
     }
 }

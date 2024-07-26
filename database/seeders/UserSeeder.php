@@ -44,6 +44,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('user'),
             'team_id' => $team->id,
             'phone' => $this->faker->phoneNumber,
+            'role' => UserRole::USER->value,
         ]);
 
         User::create([
@@ -52,6 +53,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('user'),
             'team_id' => $team->id,
             'phone' => $this->faker->phoneNumber,
+            'role' => UserRole::USER->value,
         ]);
     }
 }

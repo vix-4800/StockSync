@@ -30,7 +30,7 @@ class TelegramTokens extends Page
 
     public static function canAccess(): bool
     {
-        return Auth::user()->isManager() || Auth::user()->hasTeam();
+        return true;
     }
 
     public function mount(): void

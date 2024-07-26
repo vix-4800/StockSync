@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('theme_color')->nullable();
             $table->json('custom_fields')->nullable();
             $table->string('avatar_url')->nullable();
-            $table->enum('role', UserRole::values())->default(UserRole::USER);
+            $table->enum('role', UserRole::values())->default(UserRole::MANAGER);
             $table->boolean('is_blocked')->default(false);
             $table->foreignIdFor(Team::class)->nullable()->cascadeOnDelete();
             $table->rememberToken();

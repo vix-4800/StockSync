@@ -36,9 +36,9 @@ class MarketplaceAccountResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-folder';
 
-    public static function canViewAny(): bool
+    public static function canAccess(): bool
     {
-        return Auth::user()->isManager();
+        return Auth::user()->hasTeam() && Auth::user()->isManager();
     }
 
     public static function getNavigationGroup(): ?string
@@ -58,8 +58,7 @@ class MarketplaceAccountResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return Auth::user()
-            ->team
+        return Auth::user()->team
             ->marketplaceAccounts()
             ->getQuery();
     }
