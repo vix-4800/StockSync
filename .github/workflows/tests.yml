@@ -1,4 +1,4 @@
-name: Laravel
+name: Laravel Tests
 
 on:
     push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
     laravel-tests:
-        name: Laravel Tests
+        name: PHPUnit
 
         runs-on: ubuntu-latest
 

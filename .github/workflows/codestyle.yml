@@ -1,10 +1,10 @@
-name: Static Analysis
+name: Code Style
 
 on: [push]
 
 jobs:
     phpstan:
-        name: PHPStan
+        name: Laravel Pint
 
         runs-on: ubuntu-latest
 
@@ -20,5 +20,5 @@ jobs:
             - name: Install composer dependencies
               run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-            - name: Run Static Analysis
-              run: ./vendor/bin/phpstan --error-format=github --memory-limit=2G
+            - name: Run Laravel Pint
+              run: ./vendor/bin/pint
