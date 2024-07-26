@@ -32,6 +32,8 @@ class NetProfit extends Page
 
     public function mount(): void
     {
+        abort_unless(Auth::user()->hasTeam(), 403, "You don't have a team.");
+
         $this->accounts = Auth::user()->team
             ->marketplaceAccounts;
     }

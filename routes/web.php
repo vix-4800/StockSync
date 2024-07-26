@@ -11,4 +11,4 @@
 |
 */
 
-Route::redirect('/', '/account/login', 301);
+Route::redirect('/', '/account/login', 301)->name('home');
