@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "andrewdwallo/filament-selectify": "^2.0",
         "archilex/filament-toggle-icon-column": "^3.1",
         "bezhansalleh/filament-language-switch": "^3.1",
         "encodia/laravel-health-env-vars": "^1.8",

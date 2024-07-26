@@ -12,6 +12,7 @@ use App\Models\User;
 use Archilex\ToggleIconColumn\Columns\ToggleIconColumn;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -32,6 +33,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Collection;
+use Wallo\FilamentSelectify\Components\ToggleButton;
 use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
 use Ysfkaya\FilamentPhoneInput\Tables\PhoneColumn;
 
@@ -61,11 +63,22 @@ class UserResource extends Resource
                             ->label(__('Name'))
                             ->placeholder(__('Name'))
                             ->maxLength(125),
-                        DateTimePicker::make('email_verified_at')
-                            ->placeholder(__('Not Verified'))
-                            ->native(false)
-                            ->disabled(fn (User $record): bool => $record->hasVerifiedEmail())
-                            ->label(__('Email Verified At')),
+                        Group::make([
+                            DateTimePicker::make('email_verified_at')
+                                ->placeholder(__('Not Verified'))
+                                ->native(false)
+                                ->columnSpan(3)
+                                ->disabled(fn (User $record): bool => $record->hasVerifiedEmail())
+                                ->label(__('Email Verified At')),
+                            ToggleButton::make('is_blocked')
+                                ->offColor('primary')
+                                ->onColor('danger')
+                                ->offLabel('No')
+                                ->onLabel('Yes')
+                                ->label(__('Blocked'))
+                                ->default(true),
+                        ])
+                            ->columns(4),
                         Fieldset::make(__('Contact Info'))
                             ->schema([
                                 TextInput::make('email')
@@ -92,11 +105,13 @@ class UserResource extends Resource
                             ->label(__('Team'))
                             ->native(false)
                             ->searchable()
+                            ->live()
                             ->placeholder(__('Not Defined'))
                             ->preload()
                             ->relationship('team', 'name'),
                         Select::make('role')
                             ->native(false)
+                            ->disabled(fn (User $record): bool => ! $record->hasTeam())
                             ->options([
                                 UserRole::MANAGER->value => __('Manager'),
                                 UserRole::USER->value => __('User'),
@@ -154,7 +169,7 @@ class UserResource extends Resource
                 ToggleIconColumn::make('is_blocked')
                     ->label(__('Blocked'))
                     ->onIcon('heroicon-s-lock-closed')
-                    // ->alignCenter()
+                    ->alignCenter()
                     ->onColor('gray')
                     ->sortable()
                     ->offIcon('heroicon-s-lock-open')
