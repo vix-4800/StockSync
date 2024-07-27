@@ -2,9 +2,8 @@
 
 namespace App\Filament\Account\Pages;
 
-use App\Models\MarketplaceAccount;
+use App\Traits\WithAccountSelection;
 use Auth;
-use Filament\Actions\Action as FilamentAction;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
@@ -15,12 +14,11 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
-use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 
 class NetProfit extends Page implements HasForms
 {
-    use InteractsWithForms;
+    use InteractsWithForms, WithAccountSelection;
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
@@ -29,8 +27,6 @@ class NetProfit extends Page implements HasForms
     protected static ?int $navigationSort = 5;
 
     public ?array $data = [];
-
-    public $marketplaceAccount;
 
     public static function getNavigationGroup(): ?string
     {
@@ -113,28 +109,6 @@ class NetProfit extends Page implements HasForms
             ->statePath('data');
     }
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            FilamentAction::make('select_account')
-                ->form([
-                    Select::make('account_id')
-                        ->label(__('Marketplace Account'))
-                        ->native(false)
-                        ->default($this->marketplaceAccount)
-                        ->searchable()
-                        ->preload()
-                        ->options([
-                            __('Wildberries') => Auth::user()->team->marketplaceWildberriesAccounts->pluck('name', 'id')->toArray(),
-                            __('Ozon') => Auth::user()->team->marketplaceOzonAccounts->pluck('name', 'id')->toArray(),
-                        ])
-                        ->required(),
-                ])
-                ->outlined()
-                ->action(fn (array $data) => $this->marketplaceAccount = MarketplaceAccount::find($data['account_id'])),
-        ];
-    }
-
     protected function getFormActions(): array
     {
         return [
@@ -149,12 +123,7 @@ class NetProfit extends Page implements HasForms
         $data = $this->form->getState();
         $data['marketplace_account'] = $this->marketplaceAccount;
 
-        if (! $data['marketplace_account']) {
-            Notification::make()
-                ->warning()
-                ->title(__('Please select an account'))
-                ->send();
-
+        if (! $this->checkSelectedAccount()) {
             return;
         }
 

@@ -128,13 +128,6 @@ class EmployeeInvitationResource extends Resource
             ->emptyStateHeading(__('No Invitations Found'));
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
