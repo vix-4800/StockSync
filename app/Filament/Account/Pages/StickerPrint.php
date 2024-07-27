@@ -153,6 +153,7 @@ class StickerPrint extends Page implements HasForms, HasTable
                         ->label(__('Stickers Count')),
                     TextColumn::make('created_at')
                         ->toggleable()
+                        ->sortable()
                         ->label(__('Generated At')),
                 ])
                 ->actions([
@@ -182,7 +183,8 @@ class StickerPrint extends Page implements HasForms, HasTable
                     fn (TableAction $action) => $action
                         ->button()
                         ->label(__('Columns')),
-                );
+                )
+                ->defaultSort('created_at', 'desc');
         }
 
         return $table
