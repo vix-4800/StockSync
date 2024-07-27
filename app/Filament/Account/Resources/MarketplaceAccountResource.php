@@ -34,7 +34,9 @@ class MarketplaceAccountResource extends Resource
 {
     protected static ?string $model = MarketplaceAccount::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-folder';
+    protected static ?string $navigationIcon = 'heroicon-o-user-plus';
+
+    protected static ?int $navigationSort = 8;
 
     public static function canAccess(): bool
     {

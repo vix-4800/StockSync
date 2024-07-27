@@ -24,6 +24,8 @@ class Team extends Page implements HasForms
 
     protected static string $view = 'filament.account.pages.team';
 
+    protected static ?int $navigationSort = 7;
+
     public ?array $data = [];
 
     public static function canAccess(): bool

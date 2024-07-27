@@ -16,6 +16,8 @@ class TelegramTokens extends Page
 
     protected static string $view = 'filament.account.pages.telegram-tokens';
 
+    protected static ?int $navigationSort = 6;
+
     public string $token = '';
 
     public static function getNavigationGroup(): ?string

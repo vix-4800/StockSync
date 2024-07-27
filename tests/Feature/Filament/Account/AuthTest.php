@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Filament\Account;
 
 use Tests\TestCase;
 
-class UserPageTest extends TestCase
+class AuthTest extends TestCase
 {
     /**
      * Test the login page.

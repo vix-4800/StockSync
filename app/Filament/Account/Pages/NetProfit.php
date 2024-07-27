@@ -26,6 +26,8 @@ class NetProfit extends Page implements HasForms
 
     protected static string $view = 'filament.account.pages.net-profit';
 
+    protected static ?int $navigationSort = 5;
+
     public ?array $data = [];
 
     public $marketplaceAccount;
@@ -47,7 +49,7 @@ class NetProfit extends Page implements HasForms
 
     public function mount(): void
     {
-        abort_unless(Auth::user()->hasTeam(), 403, "You don't have a team.");
+        abort_unless($this->canAccess(), 403, "You don't have a team.");
         $this->form->fill();
     }
 

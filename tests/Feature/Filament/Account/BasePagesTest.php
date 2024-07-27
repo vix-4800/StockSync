@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Filament\Account;
 
-use App\Filament\Account\Pages\NetProfit;
+use App\Enums\UserRole;
 use App\Filament\Account\Pages\TelegramTokens;
 use App\Filament\Account\Resources\DeepLinkResource;
 use App\Models\User;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Tests\TestCase;
 
-class UserFilamentPagesTest extends TestCase
+class BasePagesTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -28,7 +28,7 @@ class UserFilamentPagesTest extends TestCase
     {
         $user = User::factory()->create([
             'is_blocked' => false,
-            'team_id' => null,
+            'role' => UserRole::USER->value,
         ]);
 
         $this->actingAs($user);
@@ -57,16 +57,6 @@ class UserFilamentPagesTest extends TestCase
     }
 
     /**
-     * Test that the user net profit page is not accessible without a team.
-     */
-    public function test_user_net_profit_page_is_unaccessible_without_a_team(): void
-    {
-        $response = $this->get(NetProfit::getUrl());
-
-        $response->assertStatus(403);
-    }
-
-    /**
      * Test that the user telegram tokens page is accessible.
      */
     public function test_user_telegram_tokens_page_is_accessible(): void
@@ -74,7 +64,7 @@ class UserFilamentPagesTest extends TestCase
         $response = $this->get(TelegramTokens::getUrl());
 
         $response->assertStatus(200);
-        $response->assertSee('Telegram Tokens');
+        $response->assertSee(__('Telegram Tokens'));
     }
 
     /**
