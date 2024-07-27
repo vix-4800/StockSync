@@ -32,11 +32,6 @@ To get started, follow these steps:
 
     ```
     composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
-    ```
-
-    &
-
-    ```
     npm install --omit=dev
     ```
 
@@ -64,15 +59,42 @@ To get started, follow these steps:
     php artisan serve
     ```
 
+Alternatively you can use Makefile
+
+```
+make install
+```
+
 ## Optimization
 
-You can optimize the application performance significantly by running these commands:
+You can optimize the application's performance significantly by running these commands:
 
 ```
 php artisan optimize
 php artisan view:cache
 php artisan icons:cache
 php artisan filament:cache-components
+```
+
+Or using the Makefile:
+
+```
+make optimize
+```
+
+## Running Tests
+
+To run the tests, use the following command:
+
+```
+make test
+```
+
+Or without the Makefile:
+
+```
+php artisan test
+./vendor/bin/phpstan analyse --memory-limit=2G
 ```
 
 ## License
