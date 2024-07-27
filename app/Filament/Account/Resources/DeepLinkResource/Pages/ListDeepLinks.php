@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Account\Resources\DeepLinkResource\Pages;
 
 use App\Enums\Marketplace;
