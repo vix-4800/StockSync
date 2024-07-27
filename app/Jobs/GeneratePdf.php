@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
+use App\Actions\Pdf\InitPdf;
+use App\Actions\Pdf\SavePdf;
 use App\Models\GeneratedPdf;
 use App\Models\MarketplaceAccount;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -9,15 +13,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Storage;
 
 class GeneratePdf implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    protected int $imgHeight = 25;
-
-    protected int $imgWidth = 37;
 
     /**
      * Create a new job instance.
@@ -29,7 +28,7 @@ class GeneratePdf implements ShouldQueue
     }
 
     /**
-     * Execute the job.
+     * Generate the pdf file.
      */
     public function handle(): void
     {
@@ -42,7 +41,9 @@ class GeneratePdf implements ShouldQueue
 
     private function createFileInStorage(GeneratedPdf $file): void
     {
-        Storage::disk('public')->put($file->file_name, '');
+        $pdf = InitPdf::handle();
+
+        SavePdf::handle($pdf, $file->file_name);
     }
 
     private function createFileInDatabase(): GeneratedPdf

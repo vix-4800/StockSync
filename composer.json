@@ -29,6 +29,7 @@
         "spatie/laravel-activitylog": "^4.8",
         "spatie/security-advisories-health-check": "^1.2",
         "swisnl/filament-backgrounds": "^1.1",
+        "tecnickcom/tcpdf": "^6.7",
         "ysfkaya/filament-phone-input": "^2.3"
     },
     "require-dev": {
