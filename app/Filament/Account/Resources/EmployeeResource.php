@@ -50,7 +50,10 @@ class EmployeeResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return Auth::user()->team
+        /** @var \App\Models\User */
+        $user = Auth::user();
+
+        return $user->team
             ->employees()
             ->with('team')
             ->getQuery();

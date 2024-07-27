@@ -25,6 +25,7 @@ class ListDeepLinks extends ListRecords
                         Marketplace::WILDBERRIES->value => 'wb',
                         Marketplace::OZON->value => 'ozon',
                         Marketplace::YANDEXMARKET->value => 'yandex',
+                        default => 'wb',
                     };
 
                     $data['user_id'] = Auth::id();

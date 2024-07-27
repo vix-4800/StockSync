@@ -5,3 +5,5 @@ reviews
 sku planner
 deep links statistics
 net profit
+
+Larastan

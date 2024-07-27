@@ -24,7 +24,11 @@ class ListEmployees extends ListRecords
             Action::make('invite')
                 ->action(function (array $data) {
                     $token = Str::random(32);
-                    $team = Auth::user()->team;
+
+                    /** @var \App\Models\User */
+                    $user = Auth::user();
+
+                    $team = $user->team;
 
                     $invitation = EmployeeInvitation::where('email', $data['email'])
                         ->where('team_id', $team->id)

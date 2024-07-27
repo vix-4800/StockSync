@@ -15,7 +15,10 @@ class CreateMarketplaceAccount extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['team_id'] = Auth::user()->team->id;
+        /** @var \App\Models\User */
+        $user = Auth::user();
+
+        $data['team_id'] = $user->team->id;
         $data['api_token_expires_at'] = Carbon::parse($data['api_token_created_at'])->addMonths(6);
 
         return $data;

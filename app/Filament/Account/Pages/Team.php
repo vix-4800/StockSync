@@ -54,7 +54,10 @@ class Team extends Page implements HasForms
 
     public function mount(): void
     {
-        $this->form->fill(Auth::user()->team->toArray());
+        /** @var \App\Models\User */
+        $user = Auth::user();
+
+        $this->form->fill($user->team->toArray());
     }
 
     public function form(Form $form): Form
@@ -116,7 +119,10 @@ class Team extends Page implements HasForms
         try {
             $data = $this->form->getState();
 
-            Auth::user()->team->update($data);
+            /** @var \App\Models\User */
+            $user = Auth::user();
+
+            $user->team->update($data);
 
             Notification::make()
                 ->success()

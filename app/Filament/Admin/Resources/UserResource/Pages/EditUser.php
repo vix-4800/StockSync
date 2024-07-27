@@ -22,7 +22,7 @@ class EditUser extends EditRecord
             ForceDeleteAction::make(),
             RestoreAction::make(),
             Action::make('verify')
-                ->action(function () {
+                ->action(function (): void {
                     $this->record->markEmailAsVerified();
                 })
                 ->color('success')

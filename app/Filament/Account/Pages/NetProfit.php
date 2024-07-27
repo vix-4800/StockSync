@@ -34,7 +34,9 @@ class NetProfit extends Page
     {
         abort_unless(Auth::user()->hasTeam(), 403, "You don't have a team.");
 
-        $this->accounts = Auth::user()->team
-            ->marketplaceAccounts;
+        /** @var \App\Models\User */
+        $user = Auth::user();
+
+        $this->accounts = $user->team->marketplaceAccounts;
     }
 }

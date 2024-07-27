@@ -13,7 +13,7 @@ trait HasRoles
      */
     public function assignRole(UserRole $role): void
     {
-        $this->role = $role->value;
+        $this->role = $role;
         $this->save();
     }
 
@@ -22,8 +22,7 @@ trait HasRoles
      */
     public function removeRole(): void
     {
-        $this->role = null;
-        $this->save();
+        $this->forceFill(['role' => null])->save();
     }
 
     /**
