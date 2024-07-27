@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('qr_code');
             $table->text('options')->nullable();
 
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

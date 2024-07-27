@@ -28,6 +28,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @method static \Database\Factories\AdminFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Admin newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Admin newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Admin query()
@@ -58,8 +59,7 @@ namespace App\Models{
  * @property bool $is_archived
  * @property string $qr_code
  * @property array|null $options
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon $created_at
  * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|DeepLink newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DeepLink newQuery()
@@ -72,7 +72,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereOptions($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereQrCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereUserId($value)
  */
 	class DeepLink extends \Eloquent {}
@@ -111,6 +110,32 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property string $file_name
+ * @property int $marketplace_account_id
+ * @property array|null $supply_numbers
+ * @property string|null $supply_dates
+ * @property int $sticker_count
+ * @property string $created_at
+ * @property-read \App\Models\MarketplaceAccount|null $account
+ * @method static \Illuminate\Database\Eloquent\Builder|GeneratedPdf newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|GeneratedPdf newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|GeneratedPdf query()
+ * @method static \Illuminate\Database\Eloquent\Builder|GeneratedPdf whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GeneratedPdf whereFileName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GeneratedPdf whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GeneratedPdf whereMarketplaceAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GeneratedPdf whereStickerCount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GeneratedPdf whereSupplyDates($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GeneratedPdf whereSupplyNumbers($value)
+ */
+	class GeneratedPdf extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property int $team_id
  * @property string $name
  * @property \App\Enums\Marketplace $marketplace
@@ -120,6 +145,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $api_token_expires_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GeneratedPdf> $files
+ * @property-read int|null $files_count
  * @property-read \App\Models\Team|null $team
  * @method static \Illuminate\Database\Eloquent\Builder|MarketplaceAccount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MarketplaceAccount newQuery()
@@ -178,6 +205,7 @@ namespace App\Models{
  * @property-read int|null $marketplace_yandex_accounts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
+ * @method static \Database\Factories\TeamFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Team newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Team newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Team query()
@@ -200,8 +228,7 @@ namespace App\Models{
  * @property int $id
  * @property int $user_id
  * @property string $token
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon $created_at
  * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken newQuery()
@@ -209,7 +236,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken whereToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TelegramToken whereUserId($value)
  */
 	class TelegramToken extends \Eloquent {}

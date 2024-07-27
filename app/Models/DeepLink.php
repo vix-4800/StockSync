@@ -11,6 +11,8 @@ class DeepLink extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -35,6 +37,7 @@ class DeepLink extends Model
         'is_archived' => 'boolean',
         'marketplace' => Marketplace::class,
         'options' => 'array',
+        'created_at' => 'datetime',
     ];
 
     /**

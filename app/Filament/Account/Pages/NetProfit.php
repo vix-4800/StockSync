@@ -120,12 +120,12 @@ class NetProfit extends Page implements HasForms
 
     public function calculate(): void
     {
-        $data = $this->form->getState();
-        $data['marketplace_account'] = $this->marketplaceAccount;
-
         if (! $this->checkSelectedAccount()) {
             return;
         }
+
+        $data = $this->form->getState();
+        $data['marketplace_account'] = $this->getSelectedAccount();
 
         dd($data);
     }

@@ -8,6 +8,7 @@ use App\Enums\Marketplace;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MarketplaceAccount extends Model
 {
@@ -45,5 +46,13 @@ class MarketplaceAccount extends Model
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
+    }
+
+    /**
+     * Get the files that belong to the MarketplaceAccount
+     */
+    public function files(): HasMany
+    {
+        return $this->hasMany(GeneratedPdf::class);
     }
 }

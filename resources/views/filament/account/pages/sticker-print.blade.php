@@ -4,4 +4,6 @@
 
         <x-filament-panels::form.actions :actions="$this->getFormActions()" />
     </x-filament-panels::form>
+
+    {{ $this->table }}
 </x-filament-panels::page>

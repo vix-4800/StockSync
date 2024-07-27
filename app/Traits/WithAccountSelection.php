@@ -83,4 +83,14 @@ trait WithAccountSelection
 
         return true;
     }
+
+    /**
+     * Retrieves the selected marketplace account.
+     *
+     * @return MarketplaceAccount|null The selected marketplace account, or null if none is selected.
+     */
+    public function getSelectedAccount(): ?MarketplaceAccount
+    {
+        return $this->marketplaceAccount;
+    }
 }
