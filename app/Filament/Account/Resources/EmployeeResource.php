@@ -111,7 +111,14 @@ class EmployeeResource extends Resource
             ])
             ->filters([], layout: FiltersLayout::AboveContent)
             ->actions([
-                ActionGroup::make([])
+                ActionGroup::make([
+                    Action::make('fire')
+                        ->label(__('Fire'))
+                        ->color('danger')
+                        ->icon('heroicon-o-user-minus')
+                        ->requiresConfirmation()
+                        ->action(fn (User $record) => $record->fire()),
+                ])
                     ->tooltip(__('Actions')),
 
             ])
