@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Abstracts\ApiService;
 use App\Helpers\Wildberries\WildberriesApiRequest;
+use App\Helpers\Wildberries\WildberriesApiResponse;
 use App\Models\MarketplaceAccount;
+use DateTime;
 
-class WildberriesApiService extends ApiService
+class WildberriesApiService
 {
     private readonly WildberriesApiRequest $request;
+
+    protected ?WildberriesApiResponse $returnData;
 
     public function __construct(
         private readonly MarketplaceAccount $marketplaceAccount
@@ -52,7 +55,8 @@ class WildberriesApiService extends ApiService
             'orders' => $orders,
         ];
 
-        $this->returnData = $this->request->post($url, $requestBody)['stickers'];
+        $response = $this->request->post($url, $requestBody);
+        $this->returnData = $response->getData()['stickers'];
 
         return $this;
     }
@@ -74,5 +78,20 @@ class WildberriesApiService extends ApiService
         $this->returnData = $this->request->get($url, $queryParams)['stocks'];
 
         return $this;
+    }
+
+    public function getSellerStatistics(DateTime $from, DateTime $to): WildberriesApiResponse
+    {
+        $url = 'https://seller-analytics-api.wildberries.ru/api/v2/nm-report/grouped/history';
+
+        $requestBody = [
+            'period' => [
+                'begin' => $from->format('Y-m-d'),
+                'end' => $to->format('Y-m-d'),
+            ],
+            'aggregationLevel' => 'day',
+        ];
+
+        return $this->request->post($url, $requestBody);
     }
 }

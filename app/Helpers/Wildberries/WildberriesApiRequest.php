@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Helpers\Wildberries;
 
-use App\Abstracts\AbstractApiRequest;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 
-final class WildberriesApiRequest extends AbstractApiRequest
+final class WildberriesApiRequest
 {
+    protected PendingRequest $request;
+
     /**
      * Api Request Constructor.
      */
@@ -24,29 +26,46 @@ final class WildberriesApiRequest extends AbstractApiRequest
 
     /**
      * Make GET request to Wildberries API
-     *
-     * @throws WildberriesApiRequestException
      */
     public function get(string $url, array $queryParams = []): array
     {
         $url = $this->prepareUrl($url, $queryParams);
 
         $response = $this->request->get($url);
-        // throw_if($response->failed(), new WildberriesApiRequestException('Failed to get data from Wildberries API'));
 
         return $response->json();
     }
 
     /**
      * Make POST request to Wildberries API
-     *
-     * @throws WildberriesApiRequestException
      */
-    public function post(string $url, array $data): array
+    public function post(string $url, array $data): WildberriesApiResponse
     {
         $response = $this->request->post($url, $data);
-        // throw_if($response->failed(), new WildberriesApiRequestException('Failed to post data to Wildberries API'));
 
-        return $response->json();
+        $apiResponse = null;
+        if ($response->failed()) {
+            $apiResponse = new WildberriesApiResponse(null, $response->status(), null, null);
+        } else {
+            if ($response->successful()) {
+                $apiResponse = new WildberriesApiResponse($response->json(), $response->status(), null, null);
+            } else {
+                $apiResponse = new WildberriesApiResponse(null, $response->status(), $response->json('title'), $response->json('detail'));
+            }
+        }
+
+        return $apiResponse;
+    }
+
+    /**
+     * Prepare URL
+     */
+    protected function prepareUrl(string $url, array $queryParams = []): string
+    {
+        if (! empty($queryParams)) {
+            $url .= '?'.http_build_query($queryParams);
+        }
+
+        return $url;
     }
 }
