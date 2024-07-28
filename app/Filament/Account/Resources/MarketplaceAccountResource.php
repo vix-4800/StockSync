@@ -130,9 +130,7 @@ class MarketplaceAccountResource extends Resource
                 TextColumn::make('marketplace'),
                 TextColumn::make('api_token_expires_at'),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 ActionGroup::make([
                     EditAction::make(),

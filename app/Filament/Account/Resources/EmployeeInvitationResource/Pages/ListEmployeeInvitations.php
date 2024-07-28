@@ -40,10 +40,9 @@ class ListEmployeeInvitations extends ListRecords
                             ->warning()
                             ->send();
                     } else {
-                        EmployeeInvitation::create([
+                        $team->invitations()->create([
                             'email' => $data['email'],
                             'token' => $token,
-                            'team_id' => $team->id,
                             'expires_at' => now()->addDay(),
                         ]);
 

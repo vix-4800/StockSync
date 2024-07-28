@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Account\Pages;
 
-use App\Models\TelegramToken;
 use Auth;
 use Filament\Actions\Action;
 use Filament\Infolists\Components\TextEntry;
@@ -73,8 +72,7 @@ class TelegramTokens extends Page
                     ];
                     $jwt = JWT::encode($payload, $key, 'HS256');
 
-                    TelegramToken::insert([
-                        'user_id' => Auth::id(),
+                    Auth::user()->telegramToken()->create([
                         'token' => $jwt,
                     ]);
 
