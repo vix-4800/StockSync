@@ -85,7 +85,15 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
      */
     public function team(): BelongsTo
     {
-        return $this->belongsTo(Team::class);
+        $defaultMessage = __('No team');
+
+        return $this->belongsTo(Team::class)->withDefault([
+            'name' => $defaultMessage,
+            'email' => $defaultMessage,
+            'phone' => $defaultMessage,
+            'address' => $defaultMessage,
+            'website' => $defaultMessage,
+        ]);
     }
 
     /**

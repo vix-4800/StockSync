@@ -69,7 +69,8 @@ class Team extends Model
      */
     public function marketplaceOzonAccounts(): HasMany
     {
-        return $this->hasMany(MarketplaceAccount::class)->where('marketplace', Marketplace::OZON);
+        return $this->hasMany(MarketplaceAccount::class)
+            ->where('marketplace', Marketplace::OZON);
     }
 
     /**
@@ -77,7 +78,8 @@ class Team extends Model
      */
     public function marketplaceYandexAccounts(): HasMany
     {
-        return $this->hasMany(MarketplaceAccount::class)->where('marketplace', Marketplace::YANDEXMARKET);
+        return $this->hasMany(MarketplaceAccount::class)
+            ->where('marketplace', Marketplace::YANDEXMARKET);
     }
 
     /**
@@ -85,7 +87,8 @@ class Team extends Model
      */
     public function marketplaceWildberriesAccounts(): HasMany
     {
-        return $this->hasMany(MarketplaceAccount::class)->where('marketplace', Marketplace::WILDBERRIES);
+        return $this->hasMany(MarketplaceAccount::class)
+            ->where('marketplace', Marketplace::WILDBERRIES);
     }
 
     /**
