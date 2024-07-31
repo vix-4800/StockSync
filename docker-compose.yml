@@ -25,7 +25,9 @@ services:
         networks:
             - sail
         depends_on:
-            - mysql
+            mysql:
+                condition: service_healthy
+
     mysql:
         image: "mysql/mysql-server:8.0"
         ports:
@@ -50,9 +52,35 @@ services:
                 - "-p${DB_PASSWORD}"
             retries: 3
             timeout: 5s
+
+    selenium:
+        image: "selenium/standalone-chrome"
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        volumes:
+            - "/dev/shm:/dev/shm"
+        networks:
+            - sail
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - mysql
+        environment:
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+        ports:
+            - "8080:80"
+        networks:
+            - sail
+        depends_on:
+            mysql:
+                condition: service_healthy
+
 networks:
     sail:
         driver: bridge
+
 volumes:
     sail-mysql:
         driver: local
