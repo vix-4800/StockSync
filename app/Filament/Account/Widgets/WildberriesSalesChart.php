@@ -14,7 +14,7 @@ class WildberriesSalesChart extends ChartWidget
 
     protected function getData(): array
     {
-        $to = new DateTime();
+        $to = new DateTime;
         $interval = DateInterval::createFromDateString(13 .' days');
         $from = (clone $to)->sub($interval);
         $from->setTime(0, 0, 0);
