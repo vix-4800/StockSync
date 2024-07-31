@@ -39,7 +39,7 @@ class UserPolicy
      */
     public function update(Authenticatable $user, User $model): bool
     {
-        return $user instanceof Admin || $user->is($model->team->manager);
+        return $this->view($user, $model);
     }
 
     /**
@@ -55,7 +55,7 @@ class UserPolicy
      */
     public function restore(Authenticatable $user, User $model): bool
     {
-        return $user instanceof Admin;
+        return $this->delete($user, $model);
     }
 
     /**
@@ -63,7 +63,7 @@ class UserPolicy
      */
     public function forceDelete(Authenticatable $user, User $model): bool
     {
-        return $user instanceof Admin;
+        return $this->delete($user, $model);
     }
 
     /**
@@ -71,7 +71,7 @@ class UserPolicy
      */
     public function deleteAny(Authenticatable $user): bool
     {
-        return $user instanceof Admin;
+        return $this->viewAny($user);
     }
 
     /**
@@ -79,7 +79,7 @@ class UserPolicy
      */
     public function restoreAny(Authenticatable $user): bool
     {
-        return $user instanceof Admin;
+        return $this->viewAny($user);
     }
 
     /**
@@ -87,6 +87,6 @@ class UserPolicy
      */
     public function forceDeleteAny(Authenticatable $user): bool
     {
-        return $user instanceof Admin;
+        return $this->viewAny($user);
     }
 }

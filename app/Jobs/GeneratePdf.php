@@ -48,9 +48,8 @@ class GeneratePdf implements ShouldQueue
 
     private function createFileInDatabase(): GeneratedPdf
     {
-        return GeneratedPdf::create([
+        return $this->marketplaceAccount->files()->create([
             'file_name' => 'sticker-'.time(),
-            'marketplace_account_id' => $this->marketplaceAccount->id,
             'supply_numbers' => 'WB-GI-96716498',
             'sticker_count' => 10,
         ]);

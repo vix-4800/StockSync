@@ -11,6 +11,6 @@ class LogoutResponse implements Responsable
 {
     public function toResponse($request): RedirectResponse
     {
-        return redirect()->route('filament.account.auth.login');
+        return to_route('filament.account.auth.login');
     }
 }

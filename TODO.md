@@ -1,11 +1,16 @@
 # To-do list
 
-sticker print
-reviews
-sku planner
-deep links statistics
-net profit
+## Pages
 
-Redis
-Faster requests, static client
-https://www.youtube.com/watch?v=BWAocgJVCbw&ab_channel=AaronFrancis
+-   [ ] Sticker print
+-   [ ] Reviews
+-   [ ] Sku planner
+-   [ ] Deep links statistics
+-   [ ] Net profit
+
+## General Improvements
+
+-   [ ] Redis
+-   [x] Default value in relations
+-   [ ] Laravel Reverb
+-   [ ] Laravel Dusk
