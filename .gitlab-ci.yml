@@ -1,0 +1,70 @@
+image: php:latest
+
+services:
+  - mysql:latest
+
+variables:
+  MYSQL_DATABASE: project_name
+  MYSQL_ROOT_PASSWORD: secret
+
+# This folder is cached between builds
+cache:
+  paths:
+    - vendor/
+    - node_modules/
+
+before_script:
+  - apt-get update -yqq
+  - apt-get install gnupg -yqq
+
+  - curl -sL https://deb.nodesource.com/setup_8.x | bash -
+
+  - apt-get install git nodejs libcurl4-gnutls-dev libicu-dev libmcrypt-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libpq-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev -yqq
+
+  - docker-php-ext-install mbstring pdo_mysql curl json intl gd xml zip bz2 opcache
+
+  - pecl install xdebug
+  - docker-php-ext-enable xdebug
+
+  - curl -sS https://getcomposer.org/installer | php
+  - php composer.phar install
+
+  # Install Node dependencies.
+  - npm install
+
+  # Copy over testing configuration.
+  # Don't forget to set the database config in .env.testing correctly
+  # DB_HOST=mysql
+  # DB_DATABASE=project_name
+  # DB_USERNAME=root
+  # DB_PASSWORD=secret
+  - cp .env.testing .env
+  
+  # Run npm build
+  # npm run build
+  - npm run dev
+
+  # Generate an application key.
+  - php artisan key:generate
+
+  # Optimize the application.
+  - php artisan optimize
+
+  # Run database migrations.
+  - php artisan migrate --force
+
+  # Run database seed
+  - php artisan db:seed
+
+test:
+  script:
+    # run laravel tests
+    - php vendor/bin/phpunit --coverage-text --colors=never
+
+    # run frontend tests
+    # - npm test
+
+deploy:
+  stage: deploy
+  script: echo "Define your deployment script!"
+  environment: production
