@@ -23743,6 +23743,27 @@ namespace Laravel\Octane\Commands {
             }
     }
 
+namespace Laravel\Reverb\Console\Commands {
+            /**
+     * 
+     *
+     */        class InstallCommand {
+            }
+    }
+
+namespace Laravel\Reverb\Servers\Reverb\Console\Commands {
+            /**
+     * 
+     *
+     */        class StartServer {
+            }
+            /**
+     * 
+     *
+     */        class RestartServer {
+            }
+    }
+
 namespace Livewire\Features\SupportConsoleCommands\Commands {
             /**
      * 
