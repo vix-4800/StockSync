@@ -20,6 +20,7 @@
         "lara-zeus/qr": "^1.1",
         "laravel-frontend-presets/tall": "^8.0",
         "laravel/framework": "^11.9",
+        "laravel/reverb": "^1.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
         "pxlrbt/filament-activity-log": "^1.1",
