@@ -14,17 +14,18 @@ class WildberriesSalesChart extends ChartWidget
 
     protected function getData(): array
     {
-        $to = new DateTime();
+        $to = new DateTime;
         $interval = DateInterval::createFromDateString(13 .' days');
         $from = (clone $to)->sub($interval);
         $from->setTime(0, 0, 0);
 
-        $service = new WildberriesApiService(Auth::user()->team->marketplaceWildberriesAccounts->first());
-        $data = $service->getSellerStatistics($from, $to)
-            ->getData();
+        if (Auth::user()->hasTeam()) {
+            $service = new WildberriesApiService(Auth::user()->team->marketplaceWildberriesAccounts->first());
+            $data = $service->getSellerStatistics($from, $to)->getData();
 
-        if (empty($data)) {
-            return [];
+            if (empty($data)) {
+                return [];
+            }
         }
 
         return [

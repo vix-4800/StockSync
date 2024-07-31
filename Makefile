@@ -7,40 +7,46 @@ codestyle: run_pint
 
 composer_install:
 	@echo "Installing Composer dependencies..."
-	composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
+	docker run --rm \
+		-u $(shell id -u):$(shell id -g) \
+		-v $(shell pwd):/var/www/html \
+		-w /var/www/html \
+		laravelsail/php82-composer:latest \
+		composer install --ignore-platform-reqs
 
 npm_install:
 	@echo "Installing NPM dependencies..."
-	npm install --omit=dev
+	./vendor/bin/sail npm install
 
 setup_env:
 	@if [ ! -f .env ]; then \
-		cp .env.example .env
-		php artisan key:generate
+		cp .env.example .env; \
+		./vendor/bin/sail php artisan key:generate; \
 	else \
-		echo ".env already exists"
+		echo ".env already exists"; \
 	fi
 
 post_install:
-	php artisan migrate --force
+	./vendor/bin/sail php artisan migrate --force
 
 optimize_app:
 	@echo "Optimizing application..."
-	php artisan optimize
-	php artisan view:cache
+	./vendor/bin/sail php artisan optimize
+	./vendor/bin/sail php artisan view:cache
 
 optimize_filament:
 	@echo "Optimizing Filament..."
-	php artisan icons:cache
-	php artisan filament:cache-components
+	./vendor/bin/sail php artisan icons:cache
+	./vendor/bin/sail php artisan filament:cache-components
 
 run_phpunit:
 	@echo "Running tests..."
-	php artisan test
+	./vendor/bin/sail php artisan test
 
 run_phpstan:
-	@echo "Running tests..."
-	./vendor/bin/phpstan analyse --memory-limit=2G
+	@echo "Running PHPStan..."
+	./vendor/bin/sail php ./vendor/bin/phpstan analyse --memory-limit=2G
 
 run_pint:
-	./vendor/bin/pint
+	@echo "Running Pint..."
+	./vendor/bin/sail ./vendor/bin/pint
