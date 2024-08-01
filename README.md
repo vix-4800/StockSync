@@ -97,6 +97,11 @@ php artisan test
 ./vendor/bin/phpstan analyse --memory-limit=2G
 ```
 
+## Ports
+
+-   Mailpit (testing email): 8025 <a href="http://localhost:8025">Visit</a>
+-   PhpMyAdmin (MySql database): 8080 <a href="http://localhost:8080">Visit</a>
+
 ## License
 
 This project is licensed under the MIT License.
