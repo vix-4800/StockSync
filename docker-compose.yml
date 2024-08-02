@@ -103,6 +103,14 @@ services:
         networks:
             - sail
 
+    redisinsight:
+        image: redislabs/redisinsight:latest
+        restart: always
+        ports:
+            - "5540:5540"
+        networks:
+            - sail
+
 networks:
     sail:
         driver: bridge

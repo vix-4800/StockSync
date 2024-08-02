@@ -99,8 +99,10 @@ php artisan test
 
 ## Ports
 
+-   Application: 80 <a href="http://localhost">Visit</a>
 -   Mailpit (testing email): 8025 <a href="http://localhost:8025">Visit</a>
 -   PhpMyAdmin (MySql database): 8080 <a href="http://localhost:8080">Visit</a>
+-   RedisInsight: 5540 <a href="http://localhost:5540">Visit</a>
 
 ## License
 
