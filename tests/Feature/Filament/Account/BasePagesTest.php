@@ -37,7 +37,7 @@ class BasePagesTest extends TestCase
     /**
      * Test that the user dashboard is accessible.
      */
-    public function test_user_dashboard_is_accessible(): void
+    public function test_dashboard_is_accessible(): void
     {
         $response = $this->get('/account');
 
@@ -48,7 +48,7 @@ class BasePagesTest extends TestCase
     /**
      * Test that the user deep link page is accessible.
      */
-    public function test_user_deep_link_page_is_accessible(): void
+    public function test_deep_link_page_is_accessible(): void
     {
         $response = $this->get(DeepLinkResource::getUrl('index'));
 
@@ -59,7 +59,7 @@ class BasePagesTest extends TestCase
     /**
      * Test that the user telegram tokens page is accessible.
      */
-    public function test_user_telegram_tokens_page_is_accessible(): void
+    public function test_telegram_tokens_page_is_accessible(): void
     {
         $response = $this->get(TelegramTokens::getUrl());
 
@@ -72,9 +72,20 @@ class BasePagesTest extends TestCase
      */
     public function test_user_settings_page_is_accessible(): void
     {
-        $response = $this->get('/account'.FilamentEditProfilePlugin::get()->getSlug());
+        $response = $this->get('/account' . FilamentEditProfilePlugin::get()->getSlug());
 
         $response->assertStatus(200);
         $response->assertSee('Edit Profile');
+    }
+
+    /**
+     * Test that the support page is accessible.
+     */
+    public function test_support_page_is_accessible(): void
+    {
+        $response = $this->get('/account/support');
+
+        $response->assertStatus(200);
+        $response->assertSee('Support');
     }
 }
