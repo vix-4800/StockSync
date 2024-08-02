@@ -1,18 +1,25 @@
 .PHONY: install optimize test composer_install npm_install setup_env post_install optimize_app optimize_filament run_tests
 
-install: composer_install npm_install setup_env post_install
+install: composer_install build_sail setup_env start_sail generate_key npm_install post_install
 optimize: optimize_app optimize_filament
 test: run_phpunit run_phpstan
 codestyle: run_pint
+up: start_sail
+down: stop_sail
+status: sail_status
+restart: stop_sail start_sail
 
 composer_install:
 	@echo "Installing Composer dependencies..."
 	docker run --rm \
-		-u $(shell id -u):$(shell id -g) \
 		-v $(shell pwd):/var/www/html \
 		-w /var/www/html \
 		laravelsail/php82-composer:latest \
 		composer install --ignore-platform-reqs
+
+build_sail:
+	@echo "Building Containers and Starting Laravel Sail..."
+	./vendor/bin/sail build
 
 npm_install:
 	@echo "Installing NPM dependencies..."
@@ -21,13 +28,21 @@ npm_install:
 setup_env:
 	@if [ ! -f .env ]; then \
 		cp .env.example .env; \
-		./vendor/bin/sail php artisan key:generate; \
 	else \
 		echo ".env already exists"; \
 	fi
 
+start_sail:
+	@echo "Starting Laravel Sail..."
+	./vendor/bin/sail up -d
+
+generate_key:
+	@echo "Generating Application Key..."
+	./vendor/bin/sail php artisan key:generate
+
 post_install:
 	./vendor/bin/sail php artisan migrate --force
+	./vendor/bin/sail php artisan octane:install
 
 optimize_app:
 	@echo "Optimizing application..."
@@ -50,3 +65,11 @@ run_phpstan:
 run_pint:
 	@echo "Running Pint..."
 	./vendor/bin/sail ./vendor/bin/pint
+
+stop_sail:
+	@echo "Stopping Laravel Sail..."
+	./vendor/bin/sail down
+
+sail_status:
+	@echo "Checking Laravel Sail status..."
+	./vendor/bin/sail ps
