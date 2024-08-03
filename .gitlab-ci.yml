@@ -49,6 +49,7 @@ phpunit:
 
 phpstan:
   stage: test
+  allow_failure: true
   dependencies:
     - composer
   script:

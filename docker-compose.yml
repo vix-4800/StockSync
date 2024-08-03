@@ -1,51 +1,40 @@
 services:
-    laravel.test:
+    web:
+        container_name: nginx
         build:
-            context: ./vendor/laravel/sail/runtimes/8.3
+            context: ./docker/nginx
             dockerfile: Dockerfile
             args:
-                WWWGROUP: "${WWWGROUP}"
-        image: sail-8.3/app
-        extra_hosts:
-            - "host.docker.internal:host-gateway"
+                - "UID=${UID:-1000}"
+                - "GID=${GID:-1000}"
         ports:
-            - "${APP_PORT:-80}:80"
-            - "${VITE_PORT:-5173}:${VITE_PORT:-5173}"
-        environment:
-            WWWUSER: "${WWWUSER}"
-            LARAVEL_SAIL: 1
-            XDEBUG_MODE: "${SAIL_XDEBUG_MODE:-off}"
-            XDEBUG_CONFIG: "${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}"
-            IGNITION_LOCAL_SITES_PATH: "${PWD}"
-            SUPERVISOR_PHP_COMMAND: "/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=frankenphp --host=0.0.0.0 --admin-port=2019 --port=80"
-            XDG_CONFIG_HOME: /var/www/html/config
-            XDG_DATA_HOME: /var/www/html/data
+            - "${FORWARD_NGINX_PORT:-80}:80"
         volumes:
             - ".:/var/www/html"
         networks:
-            - sail
+            - laravel_app
         depends_on:
-            mysql:
-                condition: service_healthy
-            redis:
-                condition: service_healthy
+            - mysql
+            - redis
 
     mysql:
+        container_name: mysql
         image: "mysql/mysql-server:8.0"
+        restart: unless-stopped
         ports:
             - "${FORWARD_DB_PORT:-3306}:3306"
         environment:
-            MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
-            MYSQL_ROOT_HOST: "%"
             MYSQL_DATABASE: "${DB_DATABASE}"
             MYSQL_USER: "${DB_USERNAME}"
             MYSQL_PASSWORD: "${DB_PASSWORD}"
+            MYSQL_ROOT_HOST: "%"
+            MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
             - "sail-mysql:/var/lib/mysql"
-            - "./vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh"
+            - "./docker/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh"
         networks:
-            - sail
+            - laravel_app
         healthcheck:
             test:
                 - CMD
@@ -56,13 +45,14 @@ services:
             timeout: 5s
 
     redis:
+        container_name: redis
         image: "redis:alpine"
         ports:
             - "${FORWARD_REDIS_PORT:-6379}:6379"
         volumes:
             - "sail-redis:/data"
         networks:
-            - sail
+            - laravel_app
         healthcheck:
             test:
                 - CMD
@@ -71,16 +61,8 @@ services:
             retries: 3
             timeout: 5s
 
-    selenium:
-        image: "selenium/standalone-chrome"
-        extra_hosts:
-            - "host.docker.internal:host-gateway"
-        volumes:
-            - "/dev/shm:/dev/shm"
-        networks:
-            - sail
-
     phpmyadmin:
+        container_name: phpmyadmin
         image: phpmyadmin/phpmyadmin
         links:
             - mysql
@@ -88,31 +70,34 @@ services:
             PMA_HOST: mysql
             PMA_PORT: 3306
         ports:
-            - "8080:80"
+            - "${FORWARD_PMA_PORT:-8081}:80"
         networks:
-            - sail
+            - laravel_app
         depends_on:
-            mysql:
-                condition: service_healthy
+            - mysql
 
-    mailpit:
-        image: "axllent/mailpit:latest"
+    mailhog:
+        container_name: mailhog
+        image: mailhog/mailhog
         ports:
-            - "${FORWARD_MAILPIT_PORT:-1025}:1025"
-            - "${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025"
+            - "1025:1025"
+            - "${FORWARD_MAILHOG_PORT:-8082}:8025"
         networks:
-            - sail
+            - laravel_app
 
     redisinsight:
+        container_name: redisinsight
         image: redislabs/redisinsight:latest
         restart: always
         ports:
-            - "5540:5540"
+            - "${FORWARD_REDISINSIGHT_PORT:-8083}:5540"
         networks:
-            - sail
+            - laravel_app
+        depends_on:
+            - redis
 
 networks:
-    sail:
+    laravel_app:
         driver: bridge
 
 volumes:

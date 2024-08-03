@@ -5,9 +5,13 @@ optimize: optimize_app optimize_filament
 test: run_phpunit run_phpstan
 codestyle: run_pint
 up: start_sail
+start: start_sail
 down: stop_sail
+stop: stop_sail
 status: sail_status
 restart: stop_sail start_sail
+build: build_sail
+shell: shell_sail
 
 composer_install:
 	@echo "Installing Composer dependencies..."
@@ -16,10 +20,6 @@ composer_install:
 		-w /var/www/html \
 		laravelsail/php82-composer:latest \
 		composer install --ignore-platform-reqs --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
-
-build_sail:
-	@echo "Building Containers and Starting Laravel Sail..."
-	./vendor/bin/sail build
 
 npm_install:
 	@echo "Installing NPM dependencies..."
@@ -73,3 +73,11 @@ stop_sail:
 sail_status:
 	@echo "Checking Laravel Sail status..."
 	./vendor/bin/sail ps
+
+build_sail:
+	@echo "Building Containers..."
+	./vendor/bin/sail build
+
+shell_sail:
+	@echo "Starting Laravel Sail shell..."
+	./vendor/bin/sail shell
