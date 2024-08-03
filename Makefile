@@ -15,7 +15,7 @@ composer_install:
 		-v $(shell pwd):/var/www/html \
 		-w /var/www/html \
 		laravelsail/php82-composer:latest \
-		composer install --ignore-platform-reqs
+		composer install --ignore-platform-reqs --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
 
 build_sail:
 	@echo "Building Containers and Starting Laravel Sail..."

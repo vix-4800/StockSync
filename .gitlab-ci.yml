@@ -1,0 +1,91 @@
+image: lorisleiva/laravel-docker:latest
+
+include:
+  - component: gitlab.com/components/code-quality/code-quality@main
+
+stages:
+  - build
+  - test
+  - deploy
+
+composer:
+  stage: build
+  script:
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - cp .env.example .env
+    - php artisan key:generate
+  artifacts:
+    expire_in: "1 month"
+    paths:
+      - vendor/
+      - .env
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}-composer
+    paths:
+      - vendor/
+
+npm:
+  stage: build
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}-npm
+    paths:
+      - node_modules/
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    expire_in: 1 month
+    paths:
+      - node_modules/
+      - public/css/
+      - public/js/
+
+phpunit:
+  stage: test
+  dependencies:
+    - composer
+  script:
+    - ./vendor/bin/phpunit --coverage-text --colors=never
+
+phpstan:
+  stage: test
+  dependencies:
+    - composer
+  script:
+    - ./vendor/bin/phpstan analyse --memory-limit=2G
+
+.init_ssh: &init_ssh |
+  eval $(ssh-agent -s)
+  echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+  mkdir -p ~/.ssh
+  chmod 700 ~/.ssh
+  [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+staging:
+  stage: deploy
+  before_script:
+    - *init_ssh
+  dependencies:
+    - npm
+    - composer
+  script:
+    - ssh $SSH_USER@$SSH_HOST "
+      if [[ ! -d $DEPLOY_PATH/.git ]]; then
+      git clone git@gitlab.com:$CI_PROJECT_PATH.git $DEPLOY_PATH;
+      fi &&
+      cd $DEPLOY_PATH && [[ -d .git ]] &&
+      git pull origin master &&
+      composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-req=php &&
+      php artisan migrate --force &&
+      php artisan optimize && php artisan view:cache &&
+      php artisan icons:cache && php artisan filament:cache-components && php artisan config:clear &&
+      npm install &&
+      npm run build"
+  environment:
+    name: staging
+    url: https://test-shop.creatrix-digital.ru/
+  only:
+    - master
+  cache:
+    paths:
+      - vendor/
