@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $seeders = [
             AdminSeeder::class,
             UserSeeder::class,
+            ConversationSeeder::class,
         ];
 
         foreach ($seeders as $seeder) {

@@ -197,6 +197,29 @@ namespace App\Models{
 /**
  * 
  *
+ * @property int $id
+ * @property int $conversation_id
+ * @property string $text
+ * @property bool $is_read
+ * @property string $created_at
+ * @property-read \App\Models\Conversation|null $conversation
+ * @method static \Database\Factories\MessageFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Message newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Message newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Message query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Message whereConversationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Message whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Message whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Message whereIsRead($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Message whereText($value)
+ */
+	class Message extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder|Role newModelQuery()
@@ -292,6 +315,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Conversation> $conversations
+ * @property-read int|null $conversations_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\DeepLink> $deepLinks
  * @property-read int|null $deep_links_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
