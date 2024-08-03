@@ -17,6 +17,7 @@ return new class extends Migration
 
             $table->foreignIdFor(Conversation::class)->cascadeOnDelete();
             $table->text('text');
+            $table->boolean('is_sent_by_user');
             $table->boolean('is_read')->default(false);
 
             $table->timestamp('created_at')->useCurrent();

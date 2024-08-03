@@ -1,8 +1,11 @@
 <div class="flex flex-col flex-shrink-0 antialiased gap-y-4 flexflex-auto md:col-span-2">
     <div class="flex flex-col h-full p-4 overflow-auto overflow-x-auto text-gray-800 transition-all duration-500 bg-gray-100 rounded-lg shadow-sm ease h-575 dark:bg-gray-900 fi-section-content-ctn ring-1 ring-gray-950/5 dark:ring-white/10">
         <div class="grid grid-cols-12 gap-y-2">
-            <x-chat-bubble message="Hey How are you today?" />
-            <x-chat-bubble message="I'm ok what about you?" :reverse="true" />
+            @foreach ($conversations as $conversation)
+            @foreach ($conversation->messages as $message)
+            <x-chat-bubble message="{{$message->text}}" reverse='{{$message->isSentByUser()}}' />
+            @endforeach
+            @endforeach
         </div>
     </div>
 

@@ -87,6 +87,6 @@ class Admin extends Authenticatable implements FilamentUser, HasAvatar
      */
     public function conversations(): HasMany
     {
-        return $this->hasMany(Conversation::class);
+        return $this->hasMany(Conversation::class)->with('messages');
     }
 }

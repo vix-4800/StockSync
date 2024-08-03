@@ -177,6 +177,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
      */
     public function conversations(): HasMany
     {
-        return $this->hasMany(Conversation::class);
+        return $this->hasMany(Conversation::class)->with('messages');
     }
 }

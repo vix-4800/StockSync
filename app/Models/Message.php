@@ -28,6 +28,7 @@ class Message extends Model
         'conversation_id',
         'text',
         'is_read',
+        'is_sent_by_user',
     ];
 
     /**
@@ -37,10 +38,22 @@ class Message extends Model
      */
     protected $casts = [
         'is_read' => 'boolean',
+        'is_sent_by_user' => 'boolean',
     ];
 
+    /**
+     * Get the conversation that the message belongs to.
+     */
     public function conversation(): BelongsTo
     {
         return $this->belongsTo(Conversation::class);
+    }
+
+    /**
+     * Determine if the message was sent by the user.
+     */
+    public function isSentByUser(): bool
+    {
+        return $this->is_sent_by_user;
     }
 }

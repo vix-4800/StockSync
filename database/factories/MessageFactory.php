@@ -20,6 +20,7 @@ class MessageFactory extends Factory
     {
         return [
             'text' => fake()->sentence(),
+            'is_sent_by_user' => fake()->boolean(),
         ];
     }
 }
