@@ -72,7 +72,7 @@ class BasePagesTest extends TestCase
      */
     public function test_user_settings_page_is_accessible(): void
     {
-        $response = $this->get('/account' . FilamentEditProfilePlugin::get()->getSlug());
+        $response = $this->get('/account'.FilamentEditProfilePlugin::get()->getSlug());
 
         $response->assertStatus(200);
         $response->assertSee('Edit Profile');
