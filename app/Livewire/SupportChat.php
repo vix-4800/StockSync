@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Auth;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
@@ -15,8 +16,12 @@ class SupportChat extends Component
     ])]
     public $message = '';
 
+    public $conversations;
+
     public function render()
     {
+        $this->conversations = Auth::user()->conversations;
+
         return view('livewire.support-chat');
     }
 

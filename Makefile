@@ -3,13 +3,13 @@
 install: composer_install build_sail setup_env start_sail generate_key npm_install post_install
 optimize: optimize_app optimize_filament
 test: run_phpunit run_phpstan
-codestyle: run_pint
+pint: run_pint
 up: start_sail
-start: start_sail
+start: up
 down: stop_sail
-stop: stop_sail
+stop: down
 status: sail_status
-restart: stop_sail start_sail
+restart: down up
 build: build_sail
 shell: shell_sail
 
@@ -64,7 +64,7 @@ run_phpstan:
 
 run_pint:
 	@echo "Running Pint..."
-	./vendor/bin/sail ./vendor/bin/pint
+	./vendor/bin/pint
 
 stop_sail:
 	@echo "Stopping Laravel Sail..."

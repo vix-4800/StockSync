@@ -171,4 +171,12 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
     {
         return $this->hasMany(DeepLink::class);
     }
+
+    /**
+     * Get the conversations for the user.
+     */
+    public function conversations(): HasMany
+    {
+        return $this->hasMany(Conversation::class);
+    }
 }

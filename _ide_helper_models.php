@@ -26,6 +26,8 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Conversation> $conversations
+ * @property-read int|null $conversations_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @method static \Database\Factories\AdminFactory factory($count = null, $state = [])
@@ -45,6 +47,32 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Admin whereUpdatedAt($value)
  */
 	class Admin extends \Eloquent implements \Filament\Models\Contracts\FilamentUser, \Filament\Models\Contracts\HasAvatar {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $admin_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Admin|null $admin
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Message> $messages
+ * @property-read int|null $messages_count
+ * @property-read \App\Models\User|null $user
+ * @method static \Database\Factories\ConversationFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Conversation newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Conversation newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Conversation query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Conversation whereAdminId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Conversation whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Conversation whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Conversation whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Conversation whereUserId($value)
+ */
+	class Conversation extends \Eloquent {}
 }
 
 namespace App\Models{
