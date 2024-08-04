@@ -75,4 +75,20 @@ class DeepLink extends Model
     {
         return $this->is_archived;
     }
+
+    /**
+     * Scope a query to only include archived deep links.
+     */
+    public function scopeArchived($query)
+    {
+        return $query->where('is_archived', true);
+    }
+
+    /**
+     * Scope a query to only include not archived deep links.
+     */
+    public function scopeNotArchived($query)
+    {
+        return $query->where('is_archived', false);
+    }
 }

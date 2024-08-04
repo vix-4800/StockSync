@@ -52,7 +52,6 @@ class Admin extends Authenticatable implements FilamentUser, HasAvatar
      * @return array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 

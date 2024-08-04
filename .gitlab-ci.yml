@@ -15,7 +15,7 @@ composer:
     - cp .env.example .env
     - php artisan key:generate
   artifacts:
-    expire_in: "1 month"
+    expire_in: "1 week"
     paths:
       - vendor/
       - .env
@@ -34,7 +34,7 @@ npm:
     - npm install
     - npm run build
   artifacts:
-    expire_in: 1 month
+    expire_in: 1 week
     paths:
       - node_modules/
       - public/css/

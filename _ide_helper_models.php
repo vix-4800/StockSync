@@ -18,7 +18,6 @@ namespace App\Models{
  * @property int $id
  * @property string $name
  * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
  * @property string|null $theme
  * @property string|null $theme_color
@@ -37,7 +36,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Admin whereAvatarUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Admin whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Admin whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Admin whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Admin whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Admin whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Admin wherePassword($value)
@@ -89,8 +87,10 @@ namespace App\Models{
  * @property array|null $options
  * @property \Illuminate\Support\Carbon $created_at
  * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink archived()
  * @method static \Illuminate\Database\Eloquent\Builder|DeepLink newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DeepLink newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DeepLink notArchived()
  * @method static \Illuminate\Database\Eloquent\Builder|DeepLink query()
  * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DeepLink whereGeneratedUrl($value)
@@ -118,8 +118,11 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Team|null $team
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation accepted()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation declined()
  * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation pending()
  * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation query()
  * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EmployeeInvitation whereEmail($value)
@@ -200,6 +203,7 @@ namespace App\Models{
  * @property int $id
  * @property int $conversation_id
  * @property string $text
+ * @property bool $is_sent_by_user
  * @property bool $is_read
  * @property string $created_at
  * @property-read \App\Models\Conversation|null $conversation
@@ -207,26 +211,18 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Message newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Message newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Message query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Message read()
+ * @method static \Illuminate\Database\Eloquent\Builder|Message sentByAdmin()
+ * @method static \Illuminate\Database\Eloquent\Builder|Message sentByUser()
+ * @method static \Illuminate\Database\Eloquent\Builder|Message unread()
  * @method static \Illuminate\Database\Eloquent\Builder|Message whereConversationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Message whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Message whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Message whereIsRead($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Message whereIsSentByUser($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Message whereText($value)
  */
 	class Message extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * 
- *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
- * @property-read int|null $users_count
- * @method static \Illuminate\Database\Eloquent\Builder|Role newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Role newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Role query()
- */
-	class Role extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -323,11 +319,15 @@ namespace App\Models{
  * @property-read int|null $notifications_count
  * @property-read \App\Models\Team|null $team
  * @property-read \App\Models\TelegramToken|null $telegramToken
+ * @method static \Illuminate\Database\Eloquent\Builder|User active()
+ * @method static \Illuminate\Database\Eloquent\Builder|User blocked()
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User unverified()
+ * @method static \Illuminate\Database\Eloquent\Builder|User verified()
  * @method static \Illuminate\Database\Eloquent\Builder|User whereAvatarUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCustomFields($value)

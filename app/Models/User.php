@@ -179,4 +179,36 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerif
     {
         return $this->hasMany(Conversation::class)->with('messages');
     }
+
+    /**
+     * Scope a query to only include blocked users.
+     */
+    public function scopeBlocked($query)
+    {
+        return $query->where('is_blocked', true);
+    }
+
+    /**
+     * Scope a query to only include active users.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_blocked', false);
+    }
+
+    /**
+     * Scope a query to only include verified users.
+     */
+    public function scopeVerified($query)
+    {
+        return $query->where('email_verified_at', '!=', null);
+    }
+
+    /**
+     * Scope a query to only include unverified users.
+     */
+    public function scopeUnverified($query)
+    {
+        return $query->where('email_verified_at', null);
+    }
 }

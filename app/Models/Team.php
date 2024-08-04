@@ -42,8 +42,8 @@ class Team extends Model
     public function employees(): HasMany
     {
         return $this->hasMany(User::class)
-            ->where('role', UserRole::USER)
-            ->where('is_blocked', false);
+            ->active()
+            ->where('role', UserRole::USER);
     }
 
     /**
@@ -52,8 +52,8 @@ class Team extends Model
     public function manager(): HasOne
     {
         return $this->hasOne(User::class)
-            ->where('role', UserRole::MANAGER)
-            ->where('is_blocked', false);
+            ->active()
+            ->where('role', UserRole::MANAGER);
     }
 
     /**
