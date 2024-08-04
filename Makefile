@@ -11,10 +11,9 @@ stop: down
 status: sail_status
 restart: down up
 build: build_sail
-shell: shell_sail
 
 composer_install:
-	@echo "Installing Composer dependencies..."
+	@echo "Installing Composer Dependencies..."
 	docker run --rm \
 		-v $(shell pwd):/var/www/html \
 		-w /var/www/html \
@@ -22,8 +21,8 @@ composer_install:
 		composer install --ignore-platform-reqs --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
 
 npm_install:
-	@echo "Installing NPM dependencies..."
-	./vendor/bin/sail npm install
+	@echo "Installing NPM Dependencies..."
+	npm install
 
 setup_env:
 	@if [ ! -f .env ]; then \
@@ -32,52 +31,49 @@ setup_env:
 		echo ".env already exists"; \
 	fi
 
-start_sail:
-	@echo "Starting Laravel Sail..."
-	./vendor/bin/sail up -d
-
 generate_key:
 	@echo "Generating Application Key..."
-	./vendor/bin/sail php artisan key:generate
+	php artisan key:generate
 
 post_install:
-	./vendor/bin/sail php artisan migrate --force
-	./vendor/bin/sail php artisan octane:install
+	php artisan migrate --force
+	php artisan octane:install
+	php artisan storage:link
 
 optimize_app:
-	@echo "Optimizing application..."
-	./vendor/bin/sail php artisan optimize
-	./vendor/bin/sail php artisan view:cache
+	@echo "Optimizing Application..."
+	php artisan optimize
+	php artisan view:cache
 
 optimize_filament:
 	@echo "Optimizing Filament..."
-	./vendor/bin/sail php artisan icons:cache
-	./vendor/bin/sail php artisan filament:cache-components
+	php artisan icons:cache
+	php artisan filament:cache-components
 
 run_phpunit:
-	@echo "Running tests..."
-	./vendor/bin/sail php artisan test
+	@echo "Running Tests..."
+	php artisan test
 
 run_phpstan:
 	@echo "Running PHPStan..."
-	./vendor/bin/sail php ./vendor/bin/phpstan analyse --memory-limit=2G
+	./vendor/bin/phpstan analyse --memory-limit=2G
 
 run_pint:
 	@echo "Running Pint..."
 	./vendor/bin/pint
 
+start_sail:
+	@echo "Starting Containers..."
+	docker compose up -d
+
 stop_sail:
-	@echo "Stopping Laravel Sail..."
-	./vendor/bin/sail down
+	@echo "Stopping Containers..."
+	docker compose down
 
 sail_status:
-	@echo "Checking Laravel Sail status..."
-	./vendor/bin/sail ps
+	@echo "Checking Containers Status..."
+	docker compose ps
 
 build_sail:
 	@echo "Building Containers..."
-	./vendor/bin/sail build
-
-shell_sail:
-	@echo "Starting Laravel Sail shell..."
-	./vendor/bin/sail shell
+	docker compose build

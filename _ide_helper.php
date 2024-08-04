@@ -24612,24 +24612,6 @@ namespace Barryvdh\LaravelIdeHelper\Console {
             }
     }
 
-namespace Laravel\Sail\Console {
-            /**
-     * 
-     *
-     */        class InstallCommand {
-            }
-            /**
-     * 
-     *
-     */        class AddCommand {
-            }
-            /**
-     * 
-     *
-     */        class PublishCommand {
-            }
-    }
-
 namespace Laravel\Tinker\Console {
             /**
      * 
