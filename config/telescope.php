@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\IsAdminMiddleware;
 use Laravel\Telescope\Http\Middleware\Authorize;
 use Laravel\Telescope\Watchers;
 
@@ -93,7 +94,8 @@ return [
 
     'middleware' => [
         'web',
-        Authorize::class,
+        // Authorize::class,
+        IsAdminMiddleware::class,
     ],
 
     /*

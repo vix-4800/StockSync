@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Http\Responses\LogoutResponse;
+use App\Models\Admin;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use Encodia\Health\Checks\EnvVars;
 use Filament\Http\Responses\Auth\Contracts\LogoutResponse as LogoutResponseContract;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Health\Checks\Checks\BackupsCheck;
@@ -94,5 +97,9 @@ class AppServiceProvider extends ServiceProvider
                     'TELEGRAM_WEBHOOK_URL',
                 ]),
         ]);
+
+        Gate::define('viewPulse', function (?Authenticatable $user) {
+            return $user instanceof Admin;
+        });
     }
 }

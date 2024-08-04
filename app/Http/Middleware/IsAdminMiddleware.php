@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use Auth;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsBlockedMiddleware
+class IsAdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class IsBlockedMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        abort_if(Auth::guard('web')->check() && Auth::guard('web')->user()->isBlocked(), 403, 'User is blocked.');
+        abort_unless(Auth::guard('admin')->check(), 403, 'Unauthorized action.');
 
         return $next($request);
     }
