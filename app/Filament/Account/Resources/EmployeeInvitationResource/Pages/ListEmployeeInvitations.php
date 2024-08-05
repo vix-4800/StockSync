@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Account\Resources\EmployeeInvitationResource\Pages;
 
-use App\Enums\InvitationStatus;
 use App\Filament\Account\Resources\EmployeeInvitationResource;
 use App\Models\EmployeeInvitation;
 use Auth;
@@ -32,7 +31,7 @@ class ListEmployeeInvitations extends ListRecords
 
                     $invitation = EmployeeInvitation::where('email', $data['email'])
                         ->where('team_id', $team->id)
-                        ->where('status', InvitationStatus::PENDING);
+                        ->pending();
 
                     if ($invitation->exists()) {
                         Notification::make()
@@ -40,10 +39,9 @@ class ListEmployeeInvitations extends ListRecords
                             ->warning()
                             ->send();
                     } else {
-                        EmployeeInvitation::create([
+                        $team->invitations()->create([
                             'email' => $data['email'],
                             'token' => $token,
-                            'team_id' => $team->id,
                             'expires_at' => now()->addDay(),
                         ]);
 

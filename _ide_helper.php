@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 11.16.0.
+ * Generated for Laravel 11.19.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -3558,6 +3558,16 @@ namespace Illuminate\Support\Facades {
                         /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
                         return $instance->serializeAndRestore($serializeAndRestore);
         }
+                    /**
+         * Get the batches that have been dispatched.
+         *
+         * @return array 
+         * @static 
+         */        public static function dispatchedBatches()
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
+                        return $instance->dispatchedBatches();
+        }
             }
             /**
      * 
@@ -4161,7 +4171,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function lock($name, $seconds = 0, $owner = null)
         {
-                        /** @var \Illuminate\Cache\DatabaseStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->lock($name, $seconds, $owner);
         }
                     /**
@@ -4173,19 +4183,8 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function restoreLock($name, $owner)
         {
-                        /** @var \Illuminate\Cache\DatabaseStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->restoreLock($name, $owner);
-        }
-                    /**
-         * Remove an item from the cache if it is expired.
-         *
-         * @param string $key
-         * @return bool 
-         * @static 
-         */        public static function forgetIfExpired($key)
-        {
-                        /** @var \Illuminate\Cache\DatabaseStore $instance */
-                        return $instance->forgetIfExpired($key);
         }
                     /**
          * Remove all items from the cache.
@@ -4194,29 +4193,70 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function flush()
         {
-                        /** @var \Illuminate\Cache\DatabaseStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->flush();
         }
                     /**
-         * Get the underlying database connection.
+         * Remove all expired tag set entries.
          *
-         * @return \Illuminate\Database\MySqlConnection 
+         * @return void 
          * @static 
-         */        public static function getConnection()
+         */        public static function flushStaleTags()
         {
-                        /** @var \Illuminate\Cache\DatabaseStore $instance */
-                        return $instance->getConnection();
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        $instance->flushStaleTags();
+        }
+                    /**
+         * Get the Redis connection instance.
+         *
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @static 
+         */        public static function connection()
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->connection();
+        }
+                    /**
+         * Get the Redis connection instance that should be used to manage locks.
+         *
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @static 
+         */        public static function lockConnection()
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->lockConnection();
+        }
+                    /**
+         * Specify the name of the connection that should be used to store data.
+         *
+         * @param string $connection
+         * @return void 
+         * @static 
+         */        public static function setConnection($connection)
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        $instance->setConnection($connection);
         }
                     /**
          * Specify the name of the connection that should be used to manage locks.
          *
-         * @param \Illuminate\Database\ConnectionInterface $connection
-         * @return \Illuminate\Cache\DatabaseStore 
+         * @param string $connection
+         * @return \Illuminate\Cache\RedisStore 
          * @static 
          */        public static function setLockConnection($connection)
         {
-                        /** @var \Illuminate\Cache\DatabaseStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->setLockConnection($connection);
+        }
+                    /**
+         * Get the Redis database instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory 
+         * @static 
+         */        public static function getRedis()
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->getRedis();
         }
                     /**
          * Get the cache key prefix.
@@ -4225,7 +4265,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function getPrefix()
         {
-                        /** @var \Illuminate\Cache\DatabaseStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->getPrefix();
         }
                     /**
@@ -4236,7 +4276,7 @@ namespace Illuminate\Support\Facades {
          * @static 
          */        public static function setPrefix($prefix)
         {
-                        /** @var \Illuminate\Cache\DatabaseStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         $instance->setPrefix($prefix);
         }
             }
@@ -18038,7 +18078,7 @@ namespace Illuminate\Support\Facades {
          * @param string $asset
          * @param string|null $buildDirectory
          * @return string 
-         * @throws \Exception
+         * @throws \Illuminate\Foundation\ViteException
          * @static 
          */        public static function content($asset, $buildDirectory = null)
         {
@@ -19143,6 +19183,430 @@ namespace Joaopaulolndev\FilamentEditProfile\Facades {
      *
      * @see \Joaopaulolndev\FilamentEditProfile\FilamentEditProfile
      */        class FilamentEditProfile {
+            }
+    }
+
+namespace Laravel\Octane\Facades {
+            /**
+     * 
+     *
+     * @see \Laravel\Octane\Octane
+     */        class Octane {
+                    /**
+         * Get a Swoole table instance.
+         *
+         * @static 
+         */        public static function table($table)
+        {
+                        /** @var \Laravel\Octane\Octane $instance */
+                        return $instance->table($table);
+        }
+                    /**
+         * Format an exception to a string that should be returned to the client.
+         *
+         * @static 
+         */        public static function formatExceptionForClient($e, $debug = false)
+        {
+                        return \Laravel\Octane\Octane::formatExceptionForClient($e, $debug);
+        }
+                    /**
+         * Write an error message to STDERR or to the SAPI logger if not in CLI mode.
+         *
+         * @static 
+         */        public static function writeError($message)
+        {
+                        return \Laravel\Octane\Octane::writeError($message);
+        }
+                    /**
+         * Concurrently resolve the given callbacks via background tasks, returning the results.
+         * 
+         * Results will be keyed by their given keys - if a task did not finish, the tasks value will be "false".
+         *
+         * @return array 
+         * @throws \Laravel\Octane\Exceptions\TaskException
+         * @throws \Laravel\Octane\Exceptions\TaskTimeoutException
+         * @static 
+         */        public static function concurrently($tasks, $waitMilliseconds = 3000)
+        {
+                        /** @var \Laravel\Octane\Octane $instance */
+                        return $instance->concurrently($tasks, $waitMilliseconds);
+        }
+                    /**
+         * Get the task dispatcher.
+         *
+         * @return \Laravel\Octane\Contracts\DispatchesTasks 
+         * @static 
+         */        public static function tasks()
+        {
+                        /** @var \Laravel\Octane\Octane $instance */
+                        return $instance->tasks();
+        }
+                    /**
+         * Get the listeners that will prepare the Laravel application for a new request.
+         *
+         * @static 
+         */        public static function prepareApplicationForNextRequest()
+        {
+                        return \Laravel\Octane\Octane::prepareApplicationForNextRequest();
+        }
+                    /**
+         * Get the listeners that will prepare the Laravel application for a new operation.
+         *
+         * @static 
+         */        public static function prepareApplicationForNextOperation()
+        {
+                        return \Laravel\Octane\Octane::prepareApplicationForNextOperation();
+        }
+                    /**
+         * Get the container bindings / services that should be pre-resolved by default.
+         *
+         * @static 
+         */        public static function defaultServicesToWarm()
+        {
+                        return \Laravel\Octane\Octane::defaultServicesToWarm();
+        }
+                    /**
+         * Register a Octane route.
+         *
+         * @static 
+         */        public static function route($method, $uri, $callback)
+        {
+                        /** @var \Laravel\Octane\Octane $instance */
+                        return $instance->route($method, $uri, $callback);
+        }
+                    /**
+         * Determine if a route exists for the given method and URI.
+         *
+         * @static 
+         */        public static function hasRouteFor($method, $uri)
+        {
+                        /** @var \Laravel\Octane\Octane $instance */
+                        return $instance->hasRouteFor($method, $uri);
+        }
+                    /**
+         * Invoke the route for the given method and URI.
+         *
+         * @static 
+         */        public static function invokeRoute($request, $method, $uri)
+        {
+                        /** @var \Laravel\Octane\Octane $instance */
+                        return $instance->invokeRoute($request, $method, $uri);
+        }
+                    /**
+         * Get the registered Octane routes.
+         *
+         * @static 
+         */        public static function getRoutes()
+        {
+                        /** @var \Laravel\Octane\Octane $instance */
+                        return $instance->getRoutes();
+        }
+                    /**
+         * Register a callback to be called every N seconds.
+         *
+         * @return \Laravel\Octane\Swoole\InvokeTickCallable 
+         * @static 
+         */        public static function tick($key, $callback, $seconds = 1, $immediate = true)
+        {
+                        /** @var \Laravel\Octane\Octane $instance */
+                        return $instance->tick($key, $callback, $seconds, $immediate);
+        }
+            }
+    }
+
+namespace Laravel\Pulse\Facades {
+            /**
+     * 
+     *
+     * @method static void store(\Illuminate\Support\Collection $items)
+     * @method static void trim()
+     * @method static void purge(array $types = null)
+     * @method static \Illuminate\Support\Collection values(string $type, array $keys = null)
+     * @method static \Illuminate\Support\Collection graph(array $types, string $aggregate, \Carbon\CarbonInterval $interval)
+     * @method static \Illuminate\Support\Collection aggregate(string $type, string|array $aggregates, \Carbon\CarbonInterval $interval, string|null $orderBy = null, string $direction = 'desc', int $limit = 101)
+     * @method static \Illuminate\Support\Collection aggregateTypes(string|array $types, string $aggregate, \Carbon\CarbonInterval $interval, string|null $orderBy = null, string $direction = 'desc', int $limit = 101)
+     * @method static float|\Illuminate\Support\Collection aggregateTotal(string|array $types, string $aggregate, \Carbon\CarbonInterval $interval)
+     * @see \Laravel\Pulse\Pulse
+     */        class Pulse {
+                    /**
+         * Register a recorder.
+         *
+         * @param array<class-string, array<mixed>|bool> $recorders
+         * @static 
+         */        public static function register($recorders)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->register($recorders);
+        }
+                    /**
+         * Record an entry.
+         *
+         * @static 
+         */        public static function record($type, $key, $value = null, $timestamp = null)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->record($type, $key, $value, $timestamp);
+        }
+                    /**
+         * Record a value.
+         *
+         * @static 
+         */        public static function set($type, $key, $value, $timestamp = null)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->set($type, $key, $value, $timestamp);
+        }
+                    /**
+         * Lazily capture items.
+         *
+         * @static 
+         */        public static function lazy($closure)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->lazy($closure);
+        }
+                    /**
+         * Report the throwable exception to Pulse.
+         *
+         * @static 
+         */        public static function report($e)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->report($e);
+        }
+                    /**
+         * Start recording.
+         *
+         * @static 
+         */        public static function startRecording()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->startRecording();
+        }
+                    /**
+         * Stop recording.
+         *
+         * @static 
+         */        public static function stopRecording()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->stopRecording();
+        }
+                    /**
+         * Execute the given callback without recording.
+         *
+         * @template TReturn
+         * @param \Laravel\Pulse\(callable():  TReturn)  $callback
+         * @return \Laravel\Pulse\TReturn 
+         * @static 
+         */        public static function ignore($callback)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->ignore($callback);
+        }
+                    /**
+         * Flush the queue.
+         *
+         * @static 
+         */        public static function flush()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->flush();
+        }
+                    /**
+         * Filter items before storage using the provided filter.
+         *
+         * @param \Laravel\Pulse\(callable(\Laravel\Pulse\Entry|\Laravel\Pulse\Value):  bool)  $filter
+         * @static 
+         */        public static function filter($filter)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->filter($filter);
+        }
+                    /**
+         * Ingest the entries.
+         *
+         * @static 
+         */        public static function ingest()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->ingest();
+        }
+                    /**
+         * Digest the entries.
+         *
+         * @static 
+         */        public static function digest()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->digest();
+        }
+                    /**
+         * Determine if Pulse wants to ingest entries.
+         *
+         * @static 
+         */        public static function wantsIngesting()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->wantsIngesting();
+        }
+                    /**
+         * Get the registered recorders.
+         *
+         * @return \Illuminate\Support\Collection<int, object> 
+         * @static 
+         */        public static function recorders()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->recorders();
+        }
+                    /**
+         * Resolve the user details for the given user IDs.
+         *
+         * @param \Illuminate\Support\Collection<int, string> $keys
+         * @static 
+         */        public static function resolveUsers($keys)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->resolveUsers($keys);
+        }
+                    /**
+         * Resolve the users' details using the given closure.
+         *
+         * @deprecated 
+         * @param \Laravel\Pulse\callable(\Illuminate\Support\Collection<int, mixed>):  ?iterable<int|string, array{name: string, email?: ?string, avatar?: ?string, extra?: ?string}>  $callback
+         * @static 
+         */        public static function users($callback)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->users($callback);
+        }
+                    /**
+         * Resolve the user's details using the given closure.
+         *
+         * @param \Laravel\Pulse\callable(\Illuminate\Contracts\Auth\Authenticatable):  array{name: string, email?: ?string, avatar?: ?string, extra?: ?string}  $callback
+         * @static 
+         */        public static function user($callback)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->user($callback);
+        }
+                    /**
+         * Get the authenticated user ID resolver.
+         *
+         * @return \Laravel\Pulse\callable(): (int|string|null)
+         * @static 
+         */        public static function authenticatedUserIdResolver()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->authenticatedUserIdResolver();
+        }
+                    /**
+         * Resolve the authenticated user id.
+         *
+         * @static 
+         */        public static function resolveAuthenticatedUserId()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->resolveAuthenticatedUserId();
+        }
+                    /**
+         * Remember the authenticated user's ID.
+         *
+         * @static 
+         */        public static function rememberUser($user)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->rememberUser($user);
+        }
+                    /**
+         * Register or return CSS for the Pulse dashboard.
+         *
+         * @param string|\Illuminate\Contracts\Support\Htmlable|\Laravel\Pulse\list<string|Htmlable>|null $css
+         * @static 
+         */        public static function css($css = null)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->css($css);
+        }
+                    /**
+         * Return the compiled JavaScript from the vendor directory.
+         *
+         * @static 
+         */        public static function js()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->js();
+        }
+                    /**
+         * The default "vendor" cache keys that should be ignored by Pulse.
+         *
+         * @return \Laravel\Pulse\list<string> 
+         * @static 
+         */        public static function defaultVendorCacheKeys()
+        {
+                        return \Laravel\Pulse\Pulse::defaultVendorCacheKeys();
+        }
+                    /**
+         * Determine if Pulse may register routes.
+         *
+         * @static 
+         */        public static function registersRoutes()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->registersRoutes();
+        }
+                    /**
+         * Configure Pulse to not register its routes.
+         *
+         * @static 
+         */        public static function ignoreRoutes()
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->ignoreRoutes();
+        }
+                    /**
+         * Handle exceptions using the given callback.
+         *
+         * @param \Laravel\Pulse\(callable(\Throwable):  mixed)  $callback
+         * @static 
+         */        public static function handleExceptionsUsing($callback)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->handleExceptionsUsing($callback);
+        }
+                    /**
+         * Execute the given callback handling any exceptions.
+         *
+         * @template TReturn
+         * @param \Laravel\Pulse\(callable():  TReturn)  $callback
+         * @return \Laravel\Pulse\TReturn|null 
+         * @static 
+         */        public static function rescue($callback)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->rescue($callback);
+        }
+                    /**
+         * Set the container instance.
+         *
+         * @param \Illuminate\Contracts\Foundation\Application $container
+         * @return \Laravel\Pulse\Pulse 
+         * @static 
+         */        public static function setContainer($container)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->setContainer($container);
+        }
+                    /**
+         * Configure the class after resolving.
+         *
+         * @static 
+         */        public static function afterResolving($app, $class, $callback)
+        {
+                        /** @var \Laravel\Pulse\Pulse $instance */
+                        return $instance->afterResolving($app, $class, $callback);
+        }
             }
     }
 
@@ -21010,7 +21474,7 @@ namespace Livewire\Features\SupportTesting {
          * 
          *
          * @see \Filament\Forms\Testing\TestsForms::fillForm()
-         * @param array $state
+         * @param \Closure|array $state
          * @param string $formName
          * @return static 
          * @static 
@@ -21022,7 +21486,7 @@ namespace Livewire\Features\SupportTesting {
          * 
          *
          * @see \Filament\Forms\Testing\TestsForms::assertFormSet()
-         * @param array $state
+         * @param \Closure|array $state
          * @param string $formName
          * @return static 
          * @static 
@@ -21068,6 +21532,31 @@ namespace Livewire\Features\SupportTesting {
                     /**
          * 
          *
+         * @see \Filament\Forms\Testing\TestsForms::assertFormComponentExists()
+         * @param string $componentKey
+         * @param \Closure|string $formName
+         * @param \Closure|null $checkComponentUsing
+         * @return static 
+         * @static 
+         */        public static function assertFormComponentExists($componentKey, $formName = 'form', $checkComponentUsing = null)
+        {
+                        return \Livewire\Features\SupportTesting\Testable::assertFormComponentExists($componentKey, $formName, $checkComponentUsing);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Forms\Testing\TestsForms::assertFormComponentDoesNotExist()
+         * @param string $componentKey
+         * @param string $formName
+         * @return static 
+         * @static 
+         */        public static function assertFormComponentDoesNotExist($componentKey, $formName = 'form')
+        {
+                        return \Livewire\Features\SupportTesting\Testable::assertFormComponentDoesNotExist($componentKey, $formName);
+        }
+                    /**
+         * 
+         *
          * @see \Filament\Forms\Testing\TestsForms::assertFormFieldExists()
          * @param string $fieldName
          * @param \Closure|string $formName
@@ -21077,6 +21566,18 @@ namespace Livewire\Features\SupportTesting {
          */        public static function assertFormFieldExists($fieldName, $formName = 'form', $checkFieldUsing = null)
         {
                         return \Livewire\Features\SupportTesting\Testable::assertFormFieldExists($fieldName, $formName, $checkFieldUsing);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Forms\Testing\TestsForms::assertFormFieldDoesNotExist()
+         * @param string $fieldName
+         * @param string $formName
+         * @return static 
+         * @static 
+         */        public static function assertFormFieldDoesNotExist($fieldName, $formName = 'form')
+        {
+                        return \Livewire\Features\SupportTesting\Testable::assertFormFieldDoesNotExist($fieldName, $formName);
         }
                     /**
          * 
@@ -21137,6 +21638,64 @@ namespace Livewire\Features\SupportTesting {
          */        public static function assertFormFieldIsVisible($fieldName, $formName = 'form')
         {
                         return \Livewire\Features\SupportTesting\Testable::assertFormFieldIsVisible($fieldName, $formName);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Forms\Testing\TestsForms::assertWizardStepExists()
+         * @param int $step
+         * @param string $formName
+         * @return static 
+         * @static 
+         */        public static function assertWizardStepExists($step, $formName = 'form')
+        {
+                        return \Livewire\Features\SupportTesting\Testable::assertWizardStepExists($step, $formName);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Forms\Testing\TestsForms::assertWizardCurrentStep()
+         * @param int $step
+         * @param string $formName
+         * @return static 
+         * @static 
+         */        public static function assertWizardCurrentStep($step, $formName = 'form')
+        {
+                        return \Livewire\Features\SupportTesting\Testable::assertWizardCurrentStep($step, $formName);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Forms\Testing\TestsForms::goToWizardStep()
+         * @param int $step
+         * @param string $formName
+         * @return static 
+         * @static 
+         */        public static function goToWizardStep($step, $formName = 'form')
+        {
+                        return \Livewire\Features\SupportTesting\Testable::goToWizardStep($step, $formName);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Forms\Testing\TestsForms::goToNextWizardStep()
+         * @param string $formName
+         * @return static 
+         * @static 
+         */        public static function goToNextWizardStep($formName = 'form')
+        {
+                        return \Livewire\Features\SupportTesting\Testable::goToNextWizardStep($formName);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Forms\Testing\TestsForms::goToPreviousWizardStep()
+         * @param string $formName
+         * @return static 
+         * @static 
+         */        public static function goToPreviousWizardStep($formName = 'form')
+        {
+                        return \Livewire\Features\SupportTesting\Testable::goToPreviousWizardStep($formName);
         }
                     /**
          * 
@@ -21985,22 +22544,26 @@ namespace Livewire\Features\SupportTesting {
          *
          * @see \Filament\Tables\Testing\TestsActions::assertTableActionExists()
          * @param array|string $name
+         * @param \Closure|null $checkActionUsing
+         * @param mixed $record
          * @return static 
          * @static 
-         */        public static function assertTableActionExists($name)
+         */        public static function assertTableActionExists($name, $checkActionUsing = null, $record = null)
         {
-                        return \Livewire\Features\SupportTesting\Testable::assertTableActionExists($name);
+                        return \Livewire\Features\SupportTesting\Testable::assertTableActionExists($name, $checkActionUsing, $record);
         }
                     /**
          * 
          *
          * @see \Filament\Tables\Testing\TestsActions::assertTableActionDoesNotExist()
          * @param array|string $name
+         * @param \Closure|null $checkActionUsing
+         * @param mixed $record
          * @return static 
          * @static 
-         */        public static function assertTableActionDoesNotExist($name)
+         */        public static function assertTableActionDoesNotExist($name, $checkActionUsing = null, $record = null)
         {
-                        return \Livewire\Features\SupportTesting\Testable::assertTableActionDoesNotExist($name);
+                        return \Livewire\Features\SupportTesting\Testable::assertTableActionDoesNotExist($name, $checkActionUsing, $record);
         }
                     /**
          * 
@@ -22591,6 +23154,19 @@ namespace Livewire\Features\SupportTesting {
          */        public static function assertTableColumnExists($name, $checkColumnUsing = null, $record = null)
         {
                         return \Livewire\Features\SupportTesting\Testable::assertTableColumnExists($name, $checkColumnUsing, $record);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertTableColumnDoesNotExist()
+         * @param string $name
+         * @param \Closure|null $checkColumnUsing
+         * @param mixed $record
+         * @return static 
+         * @static 
+         */        public static function assertTableColumnDoesNotExist($name, $checkColumnUsing = null, $record = null)
+        {
+                        return \Livewire\Features\SupportTesting\Testable::assertTableColumnDoesNotExist($name, $checkColumnUsing, $record);
         }
                     /**
          * 
@@ -23397,12 +23973,22 @@ namespace Filament\Support\Commands {
             /**
      * 
      *
-     */        class UpgradeCommand {
+     */        class MakeIssueCommand {
             }
             /**
      * 
      *
-     */        class MakeIssueCommand {
+     */        class OptimizeClearCommand {
+            }
+            /**
+     * 
+     *
+     */        class OptimizeCommand {
+            }
+            /**
+     * 
+     *
+     */        class UpgradeCommand {
             }
     }
 
@@ -23432,6 +24018,102 @@ namespace Joaopaulolndev\FilamentEditProfile\Commands {
      * 
      *
      */        class FilamentEditProfileCommand {
+            }
+    }
+
+namespace Laravel\Octane\Commands {
+            /**
+     * 
+     *
+     */        class InstallCommand {
+            }
+            /**
+     * 
+     *
+     */        class Command {
+            }
+            /**
+     * 
+     *
+     */        class StartCommand {
+            }
+            /**
+     * 
+     *
+     */        class StartRoadRunnerCommand {
+            }
+            /**
+     * 
+     *
+     */        class StartSwooleCommand {
+            }
+            /**
+     * 
+     *
+     */        class StartFrankenPhpCommand {
+            }
+            /**
+     * 
+     *
+     */        class ReloadCommand {
+            }
+            /**
+     * 
+     *
+     */        class StatusCommand {
+            }
+            /**
+     * 
+     *
+     */        class StopCommand {
+            }
+    }
+
+namespace Laravel\Pulse\Commands {
+            /**
+     * 
+     *
+     * @internal 
+     */        class WorkCommand {
+            }
+            /**
+     * 
+     *
+     * @internal 
+     */        class CheckCommand {
+            }
+            /**
+     * 
+     *
+     * @internal 
+     */        class RestartCommand {
+            }
+            /**
+     * 
+     *
+     * @internal 
+     */        class ClearCommand {
+            }
+    }
+
+namespace Laravel\Reverb\Console\Commands {
+            /**
+     * 
+     *
+     */        class InstallCommand {
+            }
+    }
+
+namespace Laravel\Reverb\Servers\Reverb\Console\Commands {
+            /**
+     * 
+     *
+     */        class StartServer {
+            }
+            /**
+     * 
+     *
+     */        class RestartServer {
             }
     }
 
@@ -23574,6 +24256,39 @@ namespace Spatie\SignalAwareCommand {
      * 
      *
      */        class SignalAwareCommand {
+            }
+    }
+
+namespace Laravel\Telescope\Console {
+            /**
+     * 
+     *
+     */        class ClearCommand {
+            }
+            /**
+     * 
+     *
+     */        class InstallCommand {
+            }
+            /**
+     * 
+     *
+     */        class PauseCommand {
+            }
+            /**
+     * 
+     *
+     */        class PruneCommand {
+            }
+            /**
+     * 
+     *
+     */        class PublishCommand {
+            }
+            /**
+     * 
+     *
+     */        class ResumeCommand {
             }
     }
 
@@ -23894,24 +24609,6 @@ namespace Barryvdh\LaravelIdeHelper\Console {
      *
      * @author Charles A. Peterson <artistan@gmail.com>
      */        class EloquentCommand {
-            }
-    }
-
-namespace Laravel\Sail\Console {
-            /**
-     * 
-     *
-     */        class InstallCommand {
-            }
-            /**
-     * 
-     *
-     */        class AddCommand {
-            }
-            /**
-     * 
-     *
-     */        class PublishCommand {
             }
     }
 
@@ -26186,6 +26883,61 @@ namespace  {
                                 return $instance->orWhereRaw($sql, $bindings);
             }
                             /**
+             * Add a "where like" clause to the query.
+             *
+             * @param \Illuminate\Contracts\Database\Query\Expression|string $column
+             * @param string $value
+             * @param bool $caseSensitive
+             * @param string $boolean
+             * @param bool $not
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */            public static function whereLike($column, $value, $caseSensitive = false, $boolean = 'and', $not = false)
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->whereLike($column, $value, $caseSensitive, $boolean, $not);
+            }
+                            /**
+             * Add an "or where like" clause to the query.
+             *
+             * @param \Illuminate\Contracts\Database\Query\Expression|string $column
+             * @param string $value
+             * @param bool $caseSensitive
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */            public static function orWhereLike($column, $value, $caseSensitive = false)
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->orWhereLike($column, $value, $caseSensitive);
+            }
+                            /**
+             * Add a "where not like" clause to the query.
+             *
+             * @param \Illuminate\Contracts\Database\Query\Expression|string $column
+             * @param string $value
+             * @param bool $caseSensitive
+             * @param string $boolean
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */            public static function whereNotLike($column, $value, $caseSensitive = false, $boolean = 'and')
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->whereNotLike($column, $value, $caseSensitive, $boolean);
+            }
+                            /**
+             * Add an "or where not like" clause to the query.
+             *
+             * @param \Illuminate\Contracts\Database\Query\Expression|string $column
+             * @param string $value
+             * @param bool $caseSensitive
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */            public static function orWhereNotLike($column, $value, $caseSensitive = false)
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->orWhereNotLike($column, $value, $caseSensitive);
+            }
+                            /**
              * Add a "where in" clause to the query.
              *
              * @param \Illuminate\Contracts\Database\Query\Expression|string $column
@@ -26935,7 +27687,7 @@ namespace  {
                                 return $instance->orWhereAll($columns, $operator, $value);
             }
                             /**
-             * Add an "where" clause to the query for multiple columns with "or" conditions between them.
+             * Add a "where" clause to the query for multiple columns with "or" conditions between them.
              *
              * @param string[] $columns
              * @param string $operator
@@ -26960,6 +27712,33 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Query\Builder $instance */
                                 return $instance->orWhereAny($columns, $operator, $value);
+            }
+                            /**
+             * Add a "where not" clause to the query for multiple columns where none of the conditions should be true.
+             *
+             * @param string[] $columns
+             * @param string $operator
+             * @param mixed $value
+             * @param string $boolean
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */            public static function whereNone($columns, $operator = null, $value = null, $boolean = 'and')
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->whereNone($columns, $operator, $value, $boolean);
+            }
+                            /**
+             * Add an "or where not" clause to the query for multiple columns where none of the conditions should be true.
+             *
+             * @param string[] $columns
+             * @param string $operator
+             * @param mixed $value
+             * @return \Illuminate\Database\Query\Builder 
+             * @static 
+             */            public static function orWhereNone($columns, $operator = null, $value = null)
+            {
+                                /** @var \Illuminate\Database\Query\Builder $instance */
+                                return $instance->orWhereNone($columns, $operator, $value);
             }
                             /**
              * Add a "group by" clause to the query.
@@ -27935,6 +28714,8 @@ namespace  {
             class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
             class Agent extends \Jenssegers\Agent\Facades\Agent {}
             class FilamentEditProfile extends \Joaopaulolndev\FilamentEditProfile\Facades\FilamentEditProfile {}
+            class Octane extends \Laravel\Octane\Facades\Octane {}
+            class Pulse extends \Laravel\Pulse\Facades\Pulse {}
             class Livewire extends \Livewire\Livewire {}
             class QrCode extends \SimpleSoftwareIO\QrCode\Facades\QrCode {}
             class Health extends \Spatie\Health\Facades\Health {}

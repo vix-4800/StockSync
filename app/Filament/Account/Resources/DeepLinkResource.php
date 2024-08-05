@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Account\Resources;
 
 use App\Enums\Marketplace;
@@ -23,6 +25,8 @@ class DeepLinkResource extends Resource
     protected static ?string $model = DeepLink::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-link';
+
+    protected static ?int $navigationSort = 4;
 
     public static function getNavigationGroup(): ?string
     {

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->cascadeOnDelete();
             $table->text('token');
 
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

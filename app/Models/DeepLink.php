@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Enums\Marketplace;
@@ -10,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class DeepLink extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -35,6 +39,7 @@ class DeepLink extends Model
         'is_archived' => 'boolean',
         'marketplace' => Marketplace::class,
         'options' => 'array',
+        'created_at' => 'datetime',
     ];
 
     /**
@@ -69,5 +74,21 @@ class DeepLink extends Model
     public function isArchived(): bool
     {
         return $this->is_archived;
+    }
+
+    /**
+     * Scope a query to only include archived deep links.
+     */
+    public function scopeArchived($query)
+    {
+        return $query->where('is_archived', true);
+    }
+
+    /**
+     * Scope a query to only include not archived deep links.
+     */
+    public function scopeNotArchived($query)
+    {
+        return $query->where('is_archived', false);
     }
 }

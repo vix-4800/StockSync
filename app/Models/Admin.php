@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
@@ -49,7 +52,6 @@ class Admin extends Authenticatable implements FilamentUser, HasAvatar
      * @return array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
@@ -77,5 +79,13 @@ class Admin extends Authenticatable implements FilamentUser, HasAvatar
     public function getFilamentDefaultAvatarUrl(): ?string
     {
         return 'https://ui-avatars.com/api/?name='.$this->name.'&rounded=true&background=000&color=fff';
+    }
+
+    /**
+     * Get the conversations for the user.
+     */
+    public function conversations(): HasMany
+    {
+        return $this->hasMany(Conversation::class)->with('messages');
     }
 }

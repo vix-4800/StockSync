@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Filament\Admin;
 
 use Tests\TestCase;
 
-class AdminPageTest extends TestCase
+class AuthTest extends TestCase
 {
     /**
      * Test the admin login page.

@@ -27,6 +27,8 @@ class EmployeeInvitationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-envelope';
 
+    protected static ?int $navigationSort = 10;
+
     public static function canAccess(): bool
     {
         return Auth::user()->isManager() && Auth::user()->hasTeam();
@@ -124,13 +126,6 @@ class EmployeeInvitationResource extends Resource
                 ]),
             ])
             ->emptyStateHeading(__('No Invitations Found'));
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

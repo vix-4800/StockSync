@@ -9,6 +9,7 @@ use App\Traits\HasRoles;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class User extends Authenticatable implements FilamentUser, HasAvatar
+class User extends Authenticatable implements FilamentUser, HasAvatar, MustVerifyEmail
 {
     use HasFactory, HasRoles, LogsActivity, Notifiable, SoftDeletes;
 
@@ -84,7 +85,15 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
      */
     public function team(): BelongsTo
     {
-        return $this->belongsTo(Team::class);
+        $defaultMessage = __('No team');
+
+        return $this->belongsTo(Team::class)->withDefault([
+            'name' => $defaultMessage,
+            'email' => $defaultMessage,
+            'phone' => $defaultMessage,
+            'address' => $defaultMessage,
+            'website' => $defaultMessage,
+        ]);
     }
 
     /**
@@ -161,5 +170,45 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     public function deepLinks(): HasMany
     {
         return $this->hasMany(DeepLink::class);
+    }
+
+    /**
+     * Get the conversations for the user.
+     */
+    public function conversations(): HasMany
+    {
+        return $this->hasMany(Conversation::class)->with('messages');
+    }
+
+    /**
+     * Scope a query to only include blocked users.
+     */
+    public function scopeBlocked($query)
+    {
+        return $query->where('is_blocked', true);
+    }
+
+    /**
+     * Scope a query to only include active users.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_blocked', false);
+    }
+
+    /**
+     * Scope a query to only include verified users.
+     */
+    public function scopeVerified($query)
+    {
+        return $query->where('email_verified_at', '!=', null);
+    }
+
+    /**
+     * Scope a query to only include unverified users.
+     */
+    public function scopeUnverified($query)
+    {
+        return $query->where('email_verified_at', null);
     }
 }

@@ -9,6 +9,7 @@ use App\Models\Team;
 use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
@@ -24,36 +25,40 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $team = Team::create([
-            'name' => 'Team 1',
-            'email' => 'team@localhost',
-            'phone' => $this->faker->phoneNumber,
-        ]);
+        DB::transaction(function () {
+            $team = Team::create([
+                'name' => 'Team 1',
+                'email' => 'team@localhost',
+                'phone' => $this->faker->phoneNumber,
+            ]);
 
-        User::create([
-            'name' => 'Manager',
-            'email' => 'manager@localhost',
-            'password' => bcrypt('manager'),
-            'team_id' => $team->id,
-            'role' => UserRole::MANAGER->value,
-        ]);
+            User::create([
+                'name' => 'Manager',
+                'email' => 'manager@localhost',
+                'password' => bcrypt('manager'),
+                'team_id' => $team->id,
+                'role' => UserRole::MANAGER->value,
+                'email_verified_at' => now(),
+            ]);
 
-        User::create([
-            'name' => 'User 1',
-            'email' => 'user@localhost',
-            'password' => bcrypt('user'),
-            'team_id' => $team->id,
-            'phone' => $this->faker->phoneNumber,
-            'role' => UserRole::USER->value,
-        ]);
+            User::create([
+                'name' => 'User 1',
+                'email' => 'user@localhost',
+                'password' => bcrypt('user'),
+                'team_id' => $team->id,
+                'phone' => $this->faker->phoneNumber,
+                'role' => UserRole::USER->value,
+                'email_verified_at' => now(),
+            ]);
 
-        User::create([
-            'name' => 'User 2',
-            'email' => 'user2@localhost',
-            'password' => bcrypt('user'),
-            'team_id' => $team->id,
-            'phone' => $this->faker->phoneNumber,
-            'role' => UserRole::USER->value,
-        ]);
+            User::create([
+                'name' => 'User 2',
+                'email' => 'user2@localhost',
+                'password' => bcrypt('user'),
+                'team_id' => $team->id,
+                'phone' => $this->faker->phoneNumber,
+                'role' => UserRole::USER->value,
+            ]);
+        });
     }
 }

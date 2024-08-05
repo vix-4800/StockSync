@@ -28,6 +28,8 @@ class EmployeeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    protected static ?int $navigationSort = 9;
+
     public static function canAccess(): bool
     {
         return Auth::user()->hasTeam() && Auth::user()->isManager();
@@ -109,7 +111,14 @@ class EmployeeResource extends Resource
             ])
             ->filters([], layout: FiltersLayout::AboveContent)
             ->actions([
-                ActionGroup::make([])
+                ActionGroup::make([
+                    Action::make('fire')
+                        ->label(__('Fire'))
+                        ->color('danger')
+                        ->icon('heroicon-o-user-minus')
+                        ->requiresConfirmation()
+                        ->action(fn (User $record) => $record->fire()),
+                ])
                     ->tooltip(__('Actions')),
 
             ])
@@ -120,13 +129,6 @@ class EmployeeResource extends Resource
                     ->label(__('Columns')),
             )
             ->emptyStateHeading(__('No Employees In Team'));
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

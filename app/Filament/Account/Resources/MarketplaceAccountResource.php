@@ -34,7 +34,9 @@ class MarketplaceAccountResource extends Resource
 {
     protected static ?string $model = MarketplaceAccount::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-folder';
+    protected static ?string $navigationIcon = 'heroicon-o-user-plus';
+
+    protected static ?int $navigationSort = 8;
 
     public static function canAccess(): bool
     {
@@ -128,9 +130,7 @@ class MarketplaceAccountResource extends Resource
                 TextColumn::make('marketplace'),
                 TextColumn::make('api_token_expires_at'),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 ActionGroup::make([
                     EditAction::make(),
@@ -143,13 +143,6 @@ class MarketplaceAccountResource extends Resource
                     DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

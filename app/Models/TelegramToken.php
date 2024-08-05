@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,6 +12,8 @@ class TelegramToken extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,6 +22,10 @@ class TelegramToken extends Model
     protected $fillable = [
         'user_id',
         'token',
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
     ];
 
     /**

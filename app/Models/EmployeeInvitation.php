@@ -57,4 +57,28 @@ class EmployeeInvitation extends Model
 
         return false;
     }
+
+    /**
+     * Scope a query to only include pending invitations.
+     */
+    public function scopePending($query)
+    {
+        return $query->where('status', InvitationStatus::PENDING);
+    }
+
+    /**
+     * Scope a query to only include accepted invitations.
+     */
+    public function scopeAccepted($query)
+    {
+        return $query->where('status', InvitationStatus::ACCEPTED);
+    }
+
+    /**
+     * Scope a query to only include declined invitations.
+     */
+    public function scopeDeclined($query)
+    {
+        return $query->where('status', InvitationStatus::DECLINED);
+    }
 }

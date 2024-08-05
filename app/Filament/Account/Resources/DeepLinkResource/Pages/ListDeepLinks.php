@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Account\Resources\DeepLinkResource\Pages;
 
 use App\Enums\Marketplace;
@@ -41,10 +43,10 @@ class ListDeepLinks extends ListRecords
         return [
             __('Unarchived') => Tab::make()
                 ->icon('heroicon-o-check-circle')
-                ->modifyQueryUsing(fn (Builder $query): Builder => $query->where('is_archived', false)),
+                ->modifyQueryUsing(fn (Builder $query): Builder => $query->notArchived()),
             __('Archived') => Tab::make()
                 ->icon('heroicon-o-x-circle')
-                ->modifyQueryUsing(fn (Builder $query): Builder => $query->where('is_archived', true)),
+                ->modifyQueryUsing(fn (Builder $query): Builder => $query->archived()),
         ];
     }
 }

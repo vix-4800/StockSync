@@ -1,9 +1,16 @@
 # To-do list
 
-sticker print
-reviews
-sku planner
-deep links statistics
-net profit
+## Pages
 
-Larastan
+-   [ ] Sticker print
+-   [ ] Reviews
+-   [ ] Sku planner
+-   [ ] Deep links statistics
+-   [ ] Net profit
+
+## General Improvements
+
+-   [ ] Redis
+-   [x] Default value in relations
+-   [ ] Laravel Reverb
+-   [ ] Laravel Dusk

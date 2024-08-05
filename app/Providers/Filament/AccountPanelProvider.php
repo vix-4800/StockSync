@@ -75,6 +75,7 @@ class AccountPanelProvider extends PanelProvider
                     ->setTitle(__('Edit Profile'))
                     ->setNavigationLabel(__('Edit Profile'))
                     ->setIcon('heroicon-o-user')
+                    ->setSort(11)
                     ->shouldShowAvatarForm(
                         value: true,
                         directory: 'avatars',

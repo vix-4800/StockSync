@@ -18,9 +18,7 @@ class IsBlockedMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->isBlocked()) {
-            abort(403);
-        }
+        abort_if(Auth::guard('web')->check() && Auth::guard('web')->user()->isBlocked(), 403, 'User is blocked.');
 
         return $next($request);
     }

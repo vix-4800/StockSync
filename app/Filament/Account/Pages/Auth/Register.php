@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Account\Pages\Auth;
 
 use Filament\Forms\Components\Component;
