@@ -4,6 +4,8 @@ use App\Http\Middleware\IsAdminMiddleware;
 use Laravel\Pulse\Http\Middleware\Authorize;
 use Laravel\Pulse\Pulse;
 use Laravel\Pulse\Recorders;
+use Laravel\Reverb\Pulse\Recorders\ReverbConnections;
+use Laravel\Reverb\Pulse\Recorders\ReverbMessages;
 
 return [
 
@@ -229,6 +231,14 @@ return [
                 '#^/'.env('PULSE_PATH', 'pulse').'$#', // Pulse dashboard...
                 '#^/telescope#', // Telescope dashboard...
             ],
+        ],
+
+        ReverbConnections::class => [
+            'sample_rate' => 1,
+        ],
+
+        ReverbMessages::class => [
+            'sample_rate' => 1,
         ],
     ],
 ];
