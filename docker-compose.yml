@@ -1,12 +1,6 @@
 services:
     nginx:
         container_name: nginx
-        # build:
-        #     context: ./docker/nginx
-        #     dockerfile: Dockerfile
-        #     args:
-        #         - "UID=${UID:-1000}"
-        #         - "GID=${GID:-1000}"
         image: "nginx:latest"
         ports:
             - "${APP_PORT:-8080}:80"
