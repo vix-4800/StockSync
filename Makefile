@@ -1,23 +1,23 @@
 .PHONY: install optimize test composer_install npm_install setup_env post_install optimize_app optimize_filament run_tests
 
-install: composer_install build_sail setup_env start_sail generate_key npm_install post_install
+install: composer_install build_containers setup_env start_containers generate_key npm_install post_install
 optimize: optimize_app optimize_filament
 test: run_phpunit run_phpstan
 pint: run_pint
-up: start_sail
+up: start_containers
 start: up
-down: stop_sail
+down: stop_containers
 stop: down
-status: sail_status
+status: containers_status
 restart: down up
-build: build_sail
+build: build_containers
 
 composer_install:
 	@echo "Installing Composer Dependencies..."
 	docker run --rm \
 		-v $(shell pwd):/var/www/html \
 		-w /var/www/html \
-		laravelsail/php82-composer:latest \
+		composer:latest \
 		composer install --ignore-platform-reqs --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
 
 npm_install:
@@ -33,47 +33,47 @@ setup_env:
 
 generate_key:
 	@echo "Generating Application Key..."
-	php artisan key:generate
+	docker compose exec php-fpm php artisan key:generate
 
 post_install:
-	php artisan migrate --force
-	php artisan octane:install
+	docker compose exec php-fpm php artisan migrate --force && \
+	php artisan octane:install && \
 	php artisan storage:link
 
 optimize_app:
 	@echo "Optimizing Application..."
-	php artisan optimize
+	docker compose exec php-fpm php artisan optimize && \
 	php artisan view:cache
 
 optimize_filament:
 	@echo "Optimizing Filament..."
-	php artisan icons:cache
+	docker compose exec php-fpm php artisan icons:cache && \
 	php artisan filament:cache-components
 
 run_phpunit:
 	@echo "Running Tests..."
-	php artisan test
+	docker compose exec php-fpm ./vendor/bin/phpunit
 
 run_phpstan:
 	@echo "Running PHPStan..."
-	./vendor/bin/phpstan analyse --memory-limit=2G
+	docker compose exec php-fpm ./vendor/bin/phpstan analyse --memory-limit=2G
 
 run_pint:
 	@echo "Running Pint..."
-	./vendor/bin/pint
+	docker compose exec php-fpm ./vendor/bin/pint
 
-start_sail:
+start_containers:
 	@echo "Starting Containers..."
 	docker compose up -d
 
-stop_sail:
+stop_containers:
 	@echo "Stopping Containers..."
 	docker compose down
 
-sail_status:
+containers_status:
 	@echo "Checking Containers Status..."
 	docker compose ps
 
-build_sail:
+build_containers:
 	@echo "Building Containers..."
 	docker compose build
