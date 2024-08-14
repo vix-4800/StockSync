@@ -18,50 +18,50 @@ To get started, follow these steps:
 
 -   Clone the repository:
 
-    ```
+    ```bash
     git clone https://github.com/vix-4800/StockSync.git
     ```
 
 -   Navigate to the project directory:
 
-    ```
+    ```bash
     cd stocksync
     ```
 
 -   Install the dependencies:
 
-    ```
+    ```bash
     composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
     npm install --omit=dev
     ```
 
 -   Set up your environment variables by copying the .env.example file:
 
-    ```
+    ```bash
     cp .env.example .env
     ```
 
 -   Generate an application key:
 
-    ```
+    ```bash
     php artisan key:generate
     ```
 
 -   Run the migrations:
 
-    ```
+    ```bash
     php artisan migrate --force
     ```
 
 -   Start the development server:
 
-    ```
+    ```bash
     php artisan serve
     ```
 
 Alternatively you can use Makefile
 
-```
+```bash
 make install
 ```
 
@@ -69,7 +69,7 @@ make install
 
 You can optimize the application's performance significantly by running these commands:
 
-```
+```bash
 php artisan optimize
 php artisan view:cache
 php artisan icons:cache
@@ -78,7 +78,7 @@ php artisan filament:cache-components
 
 Or using the Makefile:
 
-```
+```bash
 make optimize
 ```
 
@@ -86,13 +86,13 @@ make optimize
 
 To run the tests, use the following command:
 
-```
+```bash
 make test
 ```
 
 Or without the Makefile:
 
-```
+```bash
 php artisan test
 ./vendor/bin/phpstan analyse --memory-limit=2G
 ```
