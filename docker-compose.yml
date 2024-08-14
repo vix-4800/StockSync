@@ -16,17 +16,13 @@ services:
         depends_on:
             - mysql
             - redis
-        links:
-            - "php-fpm"
+            - php-fpm
 
     php-fpm:
         container_name: php-fpm
         build:
             context: ./docker/php
             dockerfile: Dockerfile
-            args:
-                - "UID=${UID:-1000}"
-                - "GID=${GID:-1000}"
         volumes:
             - "./:/var/www/html"
         restart: unless-stopped
@@ -34,9 +30,6 @@ services:
         working_dir: /var/www/html
         networks:
             - laravel_app
-        links:
-            - mysql
-            - redis
         depends_on:
             - mysql
             - redis
@@ -79,8 +72,6 @@ services:
             - "${PHPMYADMIN_PORT:-8081}:80"
         networks:
             - laravel_app
-        links:
-            - mysql
         depends_on:
             - mysql
 
@@ -90,7 +81,7 @@ services:
         ports:
             - "${REDIS_PORT:-6379}:6379"
         volumes:
-            - "sail-redis:/data"
+            - "laravel-redis:/data"
         networks:
             - laravel_app
         healthcheck:
@@ -121,6 +112,18 @@ services:
         networks:
             - laravel_app
 
+    supervisor:
+        container_name: supervisor
+        build:
+            context: ./docker/supervisor
+            dockerfile: Dockerfile
+        volumes:
+            - "./:/var/www/html"
+            - "./docker/supervisor/supervisord.conf:/etc/supervisor/supervisord.conf"
+        restart: unless-stopped
+        networks:
+            - laravel_app
+
 networks:
     laravel_app:
         driver: bridge
@@ -128,5 +131,5 @@ networks:
 volumes:
     laravel-mysql:
         driver: local
-    sail-redis:
+    laravel-redis:
         driver: local
