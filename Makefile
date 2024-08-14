@@ -7,7 +7,7 @@ optimize: optimize_app optimize_filament
 install_composer_dependencies:
 	@echo "\nInstalling Composer Dependencies..."
 
-	docker run --rm \
+	@docker run --rm \
 		-v $(shell pwd):/var/www/html \
 		-w /var/www/html \
 		composer:latest \
@@ -15,65 +15,65 @@ install_composer_dependencies:
 
 install_npm_dependencies:
 	@echo "\nInstalling NPM Dependencies..."
-
-	npm install
+	@npm install
 
 check_env:
 	@echo "\nChecking Environment Variables..."
 
 	@if [ ! -f .env ]; then \
 		cp .env.example .env; \
+        echo ".env created"; \
 	else \
 		echo ".env already exists"; \
 	fi
 
 build:
 	@echo "\nBuilding Containers..."
-	docker compose build
+	@docker compose build
 
 up:
 	@echo "\nStarting Containers..."
-	docker compose up -d
+	@docker compose up -d
 
 down:
 	@echo "\nStopping Containers..."
-	docker compose down
+	@docker compose down
 
 ps:
 	@echo "\nChecking Containers Status..."
-	docker compose ps
+	@docker compose ps
 
 logs:
 	@echo "\nChecking Containers Logs..."
-	docker compose logs -f
+	@docker compose logs -f
 
 shell:
 	@echo "\nOpening Shell..."
-	docker compose exec -it php-fpm /bin/bash
+	@docker compose exec -it php-fpm /bin/bash
 
 restart:
 	@echo "\nRestarting Containers..."
-	docker compose restart
+	@docker compose restart
 
 pint:
 	@echo "\nRunning Pint..."
-	docker compose exec php-fpm ./vendor/bin/pint
+	@docker compose exec php-fpm ./vendor/bin/pint
 
 larastan:
 	@echo "\nRunning PHPStan..."
-	docker compose exec php-fpm ./vendor/bin/phpstan analyse --memory-limit=2G
+	@docker compose exec php-fpm ./vendor/bin/phpstan analyse --memory-limit=2G
 
 octane:
 	@echo "\nInstalling Octane..."
-	php artisan octane:install
+	@docker compose exec php-fpm php artisan octane:install
 
 storage_link:
 	@echo "\nLinking Storage..."
-	docker compose exec php-fpm php artisan storage:link
+	@docker compose exec php-fpm php artisan storage:link
 
 test:
 	@echo "\nRunning Tests..."
-	docker compose exec php-fpm php artisan test
+	@docker compose exec php-fpm php artisan test
 
 wait:
 	@echo "\nWaiting for MySQL to start..."
@@ -81,22 +81,22 @@ wait:
 
 migrate:
 	@echo "\nRunning Migrations..."
-	docker compose exec php-fpm php artisan migrate --force
+	@docker compose exec php-fpm php artisan migrate --force
 
 generate_key:
 	@echo "\nGenerating Application Key..."
-	docker compose exec php-fpm php artisan key:generate
+	@docker compose exec php-fpm php artisan key:generate
 
 seed:
 	@echo "\nSeeding Database..."
-	docker compose exec php-fpm php artisan db:seed
+	@docker compose exec php-fpm php artisan db:seed
 
 optimize_app:
 	@echo "\nOptimizing Application..."
-	docker compose exec php-fpm php artisan optimize && \
-	php artisan view:cache
+	@docker compose exec php-fpm php artisan optimize
+	@docker compose exec php-fpm php artisan view:cache
 
 optimize_filament:
 	@echo "\nOptimizing Filament..."
-	docker compose exec php-fpm php artisan icons:cache && \
-	php artisan filament:cache-components
+	@docker-compose exec php-fpm php artisan icons:cache
+	@docker-compose exec php-fpm php artisan filament:cache-components
